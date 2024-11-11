@@ -1,0 +1,319 @@
+.landing-page-content {
+    width: 100%;
+    padding: 0;
+    flex-grow: 1; /* Ensure this takes up available space */
+    box-sizing: border-box;
+    background-color: #e5e4db;
+}
+
+.recommended-books {
+    width: 75%;           /* Set the width to 50% */
+    margin: 10px auto;       /* Center the section horizontally */
+    padding: 20px;        /* Optional: Add padding around the section */
+    background: #fff;
+    border-radius: 2px;
+    margin: 10px auto;
+    overflow: hidden;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, .1);
+    padding: 10px;
+}
+
+.recommended-books .tag-title {
+    height: 38px;
+    line-height: 38px;
+    font-size: 16px;
+    padding-left: 10px;
+    border-bottom: 1px solid #e6e6e6;
+    font-family: Arial, sans-serif;
+    color: #666;
+    margin-bottom: 10px;
+
+    font-weight: bold;
+}
+
+.recommended-books h2 {
+    height: 32px;
+    line-height: 32px;
+    font-size: 16px;
+    padding-left: 10px;
+    border-bottom: 1px solid #e6e6e6;
+    font-family: Arial, sans-serif;
+    font-weight: bold;
+    color: #666;
+    margin-bottom: 10px;
+}
+
+.recommended-books ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between; /* Adjust the spacing between items */
+}
+
+.recommended-books ul li {
+    width: 16%; /* Use a percentage to avoid fixed widths */
+    height: 190px;
+    text-align: center;
+    margin-bottom: 20px; /* Give space at the bottom between rows */
+}
+
+.recommended-books li img {
+    width: 90%; /* Let the image fill the container width */
+    height: 150px; /* Maintain the image's aspect ratio */
+    overflow-clip-margin: content-box;
+    overflow: clip;
+}
+
+
+.recommended-books ul li p.dsbn {
+    height: 30px;
+    line-height: 30px;
+}
+
+.recommended-books ul li p.dsbn a {
+    font-weight: bold;
+    font-size: 14px;
+    color: #333333;
+}
+
+.recommended-books ul li p.dsbn a:hover {
+    color: #00bb9c;
+}
+
+.recommended-books ul li p {
+    text-align: center;
+    overflow: hidden;
+}
+
+
+.popular-books {
+    width: 75%;           /* Set the width to 50% */
+    margin: 10px auto;       /* Center the section horizontally */
+    background: #fff;
+    border-radius: 2px;
+    margin: 10px auto;
+    overflow: hidden;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, .1);
+    padding: 10px;
+
+    height: 24px;
+    line-height: 35px;
+    border-bottom: 1px solid #e6e6e6;
+    text-indent: 10px;
+}
+
+.popular-books .tag-title {
+    font-size: 16px;
+    font-weight: bold;
+    color: #4e4e61;
+    float: left;
+    -ms-transform: translateY(-30%);
+    transform: translateY(-30%);
+}
+
+.popular-books h2 {
+    height: 32px;
+    line-height: 32px;
+    font-size: 16px;
+    padding-left: 10px;
+    border-bottom: 1px solid #e6e6e6;
+    font-family: Arial, sans-serif;
+    font-weight: bold;
+    color: #666;
+    margin-bottom: 10px;
+}
+
+.popular-books .tags {
+    -ms-transform: translateY(-25%);
+    transform: translateY(-25%);
+
+}
+
+.popular-books span {
+    padding: 0 10px;
+}
+
+.popular-books span.current {
+    font-weight: bold;
+    color: #965;
+}
+
+.popular-books-list {
+    width: 75%;           /* Set the width to 50% */
+    margin: 10px auto;       /* Center the section horizontally */
+    background: #fff;
+    border-radius: 2px;
+    margin: 10px auto;
+    overflow: hidden;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, .1);
+    padding: 10px;
+
+    border-bottom: 1px solid #e6e6e6;
+    text-indent: 10px;
+}
+
+.popular-books-list ul {
+    padding: 2px 10px;
+    overflow: hidden;
+}
+
+.popular-books-list ul li {
+    height: 25px;
+    line-height: 25px;
+    position: relative;
+    padding-left: 8px;
+    float: left;
+    width: 46%;
+    overflow: hidden;
+    font-size: 16px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.latest-novels {
+    width: 75%;           /* Set the width to 50% */
+    margin: 10px auto;       /* Center the section horizontally */
+    /* background: #fff; */
+    border-radius: 2px;
+    margin: 10px auto;
+    overflow: hidden;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, .1);
+    padding: 10px;
+
+    border-bottom: 1px solid #e6e6e6;
+    text-indent: 10px;
+}
+
+.latest-novels .tag-title {
+    border-bottom: #00bb9c 2px solid;
+    zoom: 1;
+    overflow: hidden;
+}
+
+.latest-novels .tag-title h5 {
+    background: #00bb9c;
+    color: #fff;
+
+    float: left;
+    font-size: 18px;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+    cursor: pointer;
+    padding: 7px 15px 5px 15px;
+    margin-right: 10px;
+    margin: 0;
+}
+
+.latest-novels .tag-title a {
+    float: right;
+    padding: 7px 15px 5px 15px;
+    font-size: 16px;
+    color: #4e4e61;
+    text-decoration: none;
+}
+
+.latest-novels .latest-update-list {
+    background: #fff;
+    padding: 10px 0px;
+    zoom: 1;
+    overflow: hidden;
+    border-radius: 0px 0px 2px 2px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, .1);
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* Two equal-width columns */
+    gap: 20px; /* Space between items */
+}
+
+.latest-novels .latest-update-list .latest-update-novel {
+    border-bottom: #EEE 1px solid;
+    height: 130px;
+    position: relative;
+    zoom: 1;
+    overflow: hidden;
+    margin: 0px 5px 10px 8px;
+}
+
+.latest-novels .latest-update-list .latest-update-novel a {
+    color: #4e4e61;
+    display: block;
+    overflow: hidden
+}
+
+.latest-novels .latest-update-list .latest-update-novel a:hover {
+    color: #00bb9c;
+    text-decoration: underline;
+}
+
+.latest-novels .latest-update-list .latest-update-novel .pic {
+    width: 100px;
+    height: 120px;
+    padding: 2px;
+    overflow: hidden;
+    position: absolute;
+}
+
+.latest-novels .latest-update-list .latest-update-novel .pic img {
+    width: 100%;
+}
+
+.latest-novels .latest-update-list .latest-update-novel .infos {
+    float: left;
+    margin-left: 110px;
+}
+
+.latest-novels .latest-update-list .latest-update-novel .infos h3 {
+    font-weight: 600;
+    font-size: 16px;
+}
+
+.latest-novels .latest-update-list .latest-update-novel .infos .booknews {
+    height: 25px;
+    line-height: 25px;
+    overflow: hidden;
+    color: #222;
+}
+
+.latest-novels .latest-update-list .latest-update-novel .infos .booknews .date {
+    float: right;
+    font-size: 12px;
+    color: #965
+}
+
+.latest-novels .latest-update-list .latest-update-novel .infos .booknews .size {
+    font-size: 12px;
+    color: #965
+}
+
+.latest-novels .latest-update-list .latest-update-novel .infos p {
+    height: 80px;
+    line-height: 20px;
+    overflow: hidden;
+    font-size: 13px;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    margin-top: 5px;
+}
+
+body, h1, h2, h3, h4, h5, h6, p, pre, blockquote, dl, dt, dd, ul, ol, li, form, fieldset, legend, input, textarea, button {
+    margin: 0;
+    padding: 0;
+    outline: none;
+}
+
+p {
+    display: block;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    unicode-bidi: isolate;
+}
+
+a {
+    color: #4e4e61;
+    text-decoration: none;
+}

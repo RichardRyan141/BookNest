@@ -1,0 +1,49 @@
+/* src/components/LoginForm.css */
+.login-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.login-form h2 {
+    margin-bottom: 10px;
+    font-size: 24px;
+    text-align: center;
+}
+
+.login-form input {
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.login-form button {
+    padding: 10px;
+    font-size: 16px;
+    color: #fff;
+    background-color: #007bff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.login-form button:hover {
+    background-color: #0056b3;
+}
+
+
+.login-form .register-link {
+    color: #40817c;
+    text-align: center;
+    font-size: 18px;
+    margin-top: 10px;
+    display: inline-block;
+    text-decoration: none;
+}
+
+.login-form .register-link:hover {
+    color: #007bff; 
+    cursor: pointer;
+}

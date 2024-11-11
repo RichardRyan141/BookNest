@@ -1,0 +1,28 @@
+.landing-page {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Ensure the landing page takes up at least the full height */
+}
+
+.landing-page > * {
+    flex-shrink: 0; /* Prevent content or footer from shrinking */
+}
+
+.landing-page-content {
+    flex-grow: 1; /* Ensure this takes up available space */
+    padding-bottom: 50px; /* Ensure some space for footer, if necessary */
+
+}
+
+.auth-buttons {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.auth-buttons button {
+    margin: 0 10px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+}
