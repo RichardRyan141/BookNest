@@ -99,4 +99,65 @@ const addBook = (req, res) => {
     });
 };
 
-module.exports = { getBooks, addBook };
+const editBook = (req, res) => {
+    upload(req, res, async (err) => {
+        if (err) {
+            return res.status(400).json({ message: err.message });
+        }
+
+        const { id } = req.params; // Get the book ID from the URL parameters
+        const { title, description, status } = req.body;
+        let coverImage = null;
+
+        // Validate input
+        if (!title || !description || !status) {
+            return res.status(400).json({ message: 'All fields are required' });
+        }
+
+        try {
+            // Find the existing book by ID
+            const existingBook = await Book.findByPk(id);
+
+            if (!existingBook) {
+                return res.status(404).json({ message: 'Book not found' });
+            }
+
+            // Update book details
+            existingBook.title = title;
+            existingBook.description = description;
+            existingBook.status = status;
+            
+            // Handle updating the cover image
+            if (req.file) {
+                coverImage = `uploads/${existingBook.id}${path.extname(req.file.originalname)}`;
+                const fs = require('fs');
+                const oldPath = req.file.path;
+                const newPath = `./uploads/${existingBook.id}${path.extname(req.file.originalname)}`;
+
+                // Rename the file to match the book's ID
+                fs.rename(oldPath, newPath, (err) => {
+                    if (err) {
+                        console.error(err);
+                    } else {
+                        console.log('File renamed successfully');
+                    }
+                });
+
+                existingBook.coverImage = coverImage;
+            }
+
+            // Save the updated book
+            await existingBook.save();
+
+            res.status(200).json({
+                message: 'Book updated successfully',
+                book: existingBook,
+            });
+        } catch (error) {
+            console.error(error);
+            res.status(500).json({ error: 'Failed to update book' });
+        }
+    });
+};
+
+module.exports = { getBooks, addBook, editBook };

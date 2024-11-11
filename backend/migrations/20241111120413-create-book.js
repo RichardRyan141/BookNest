@@ -18,6 +18,10 @@ module.exports = {
       cover_img: {
         type: Sequelize.STRING
       },
+      status: {
+        type: Sequelize.STRING,
+        defaultValue: 'ongoing'
+      },
       author: {
         type: Sequelize.STRING
       },
