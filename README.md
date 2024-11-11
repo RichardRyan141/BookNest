@@ -12,3 +12,4 @@ Database
 1) npx sequelize-cli db:migrate:undo
 2) npx sequelize-cli db:migrate
 3) npx sequelize-cli db:seed:all
+4) npx sequelize-cli model:generate --name User --attributes name:string,email:string,password:string
