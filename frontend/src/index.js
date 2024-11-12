@@ -12,6 +12,9 @@ import Register from "./components/RegisterPage/Register";
 import Profile from "./components/Profile/Profile";
 import Community from "./components/CommunityPage/Community";
 import CommunityDetail from "./components/CommunityPage/CommunityDetail";
+import MarketPage from "./components/MarketPage/MarketPage";
+import InboxPage from "./components/InboxPage/Inbox";
+import { AuthProvider } from "./components/AuthContext/AuthContext";
 
 const router = createBrowserRouter([
   {
@@ -63,12 +66,30 @@ const router = createBrowserRouter([
       </Layout>
     ),
   },
+  {
+    path: "/marketplace",
+    element: (
+      <Layout>
+        <MarketPage />
+      </Layout>
+    ),
+  },
+  {
+    path: "/inbox",
+    element: (
+      <Layout>
+        <InboxPage />
+      </Layout>
+    ),
+  },
 ]);
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <AuthProvider>
+      <RouterProvider router={router} />
+    </AuthProvider>
   </React.StrictMode>
 );
 

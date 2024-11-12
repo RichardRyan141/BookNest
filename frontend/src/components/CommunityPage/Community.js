@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import Swal from "sweetalert2";
 
 // Sample data for communities with more details
 const mockCommunities = [
@@ -89,6 +90,13 @@ const Community = () => {
   // Handle joining a community
   const joinCommunity = (community) => {
     setYourCommunities((prev) => [...prev, community]);
+    Swal.fire({
+      icon: "success",
+      title: "Successfully Join",
+      text: "Welcome to the team!",
+      timer: 1000,
+      showConfirmButton: false,
+    });
   };
 
   return (
