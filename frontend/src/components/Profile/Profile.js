@@ -77,7 +77,25 @@ const Profile = () => {
           }
         `}
             >
-              {badge}
+              <div key={index} className="flex items-center gap-2">
+                <div
+                  className="w-5 h-5"
+                  style={{
+                    backgroundImage: `url(${
+                      index === 0
+                        ? "/badge/book-cover.png"
+                        : index === 1
+                        ? "/badge/verify.png"
+                        : index === 2
+                        ? "/badge/tick-mark.png"
+                        : ""
+                    })`,
+                    backgroundSize: "cover",
+                    backgroundPosition: "center",
+                  }}
+                ></div>
+                {badge}
+              </div>
             </span>
           ))}
         </div>

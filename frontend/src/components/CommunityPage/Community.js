@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 
 // Sample data for communities with more details
 const mockCommunities = [
@@ -182,12 +183,12 @@ const Community = () => {
                     </div>
                   </div>
                   <div className="flex justify-center gap-3 mt-4">
-                    <button
-                      onClick={() => alert(`Viewing ${community.name}`)}
-                      className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition duration-200"
-                    >
-                      View
-                    </button>
+                    <Link to={`/community/${community.id}`}>
+                      <button className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition duration-200">
+                        View
+                      </button>
+                    </Link>
+
                     <button
                       onClick={() => alert(`Deleting ${community.name}`)}
                       className="bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700 transition duration-200"

@@ -11,6 +11,7 @@ import Layout from "./layout";
 import Register from "./components/RegisterPage/Register";
 import Profile from "./components/Profile/Profile";
 import Community from "./components/CommunityPage/Community";
+import CommunityDetail from "./components/CommunityPage/CommunityDetail";
 
 const router = createBrowserRouter([
   {
@@ -46,12 +47,19 @@ const router = createBrowserRouter([
       </Layout>
     ),
   },
-  ,
   {
     path: "/community",
     element: (
       <Layout>
         <Community />
+      </Layout>
+    ),
+  },
+  {
+    path: "/community/:id",
+    element: (
+      <Layout>
+        <CommunityDetail />
       </Layout>
     ),
   },
