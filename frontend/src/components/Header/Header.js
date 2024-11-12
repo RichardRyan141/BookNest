@@ -116,12 +116,19 @@ const Header = () => {
             <div className="flex items-center lg:order-2">
               {isAuthenticated ? (
                 <>
-                  <Link to="/inbox">
-                    <img
-                      className="w-10 h-10 rounded mr-2"
-                      src="/mail.png"
-                      alt="Inbox"
-                    />
+                  <Link
+                    to="/inbox"
+                    className="flex items-center px-3 py-2 border border-blue-500 rounded-full outline-none hover:bg-blue-50 focus:ring-2 focus:ring-blue-300 transition duration-200 ease-in-out mr-3"
+                  >
+                    <span
+                      className="text-2xl mr-2"
+                      role="img"
+                      aria-label="Inbox Icon"
+                    >
+                      📬
+                    </span>
+                    <span className="text-blue-700 ">Inbox</span>{" "}
+                    {/* Inbox label */}
                   </Link>
                   <Link to="/profile">
                     <img
