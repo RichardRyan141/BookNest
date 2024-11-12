@@ -2,40 +2,33 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Books', {
+    await queryInterface.createTable('Communities', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      title: {
+      name: {
         type: Sequelize.STRING
       },
       description: {
         type: Sequelize.TEXT
       },
-      cover_img: {
+      logo_path: {
         type: Sequelize.STRING
       },
-      status: {
-        type: Sequelize.STRING,
-        defaultValue: 'ongoing'
-      },
-      author_id: {
+      creator_id: {
         type: Sequelize.INTEGER,
         references: {
           model: {
             tableName: 'Users',
-            schema: 'public'  // Specify the schema explicitly
+            schema: 'public'
           },      
           key: 'id'
         },
-        onDelete: 'CASCADE',
-        onUpdate: 'CASCADE'
-      },
-      publisher: {
-        type: Sequelize.STRING
+        onDelete: 'SET NULL',
+        onUpdate: 'SET NULL'
       },
       createdAt: {
         allowNull: false,
@@ -50,6 +43,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Books');
+    await queryInterface.dropTable('Communities');
   }
 };

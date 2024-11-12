@@ -1,11 +1,13 @@
-const { Book } = require('../models');
+const { Book, Chapter, User } = require('../models');
 const multer = require('multer');
 const path = require('path');
+const jwt = require('jsonwebtoken');
+const JWT_SECRET = process.env.JWT_SECRET || "03f166d26bab9394365d354cdba95cea17936b4df707e41a24d1d51769dfee58";
 
 // Set up multer to store images in a "uploads" directory
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
-        cb(null, './uploads/'); // Store the images in the "uploads" folder
+        cb(null, './uploads/book-cover'); // Store the images in the "uploads" folder
     },
     filename: (req, file, cb) => {
         const fileExtension = path.extname(file.originalname); // Extract file extension
@@ -49,12 +51,20 @@ const addBook = (req, res) => {
             return res.status(400).json({ message: err.message });
         }
 
-        const { title, description, author, publisher } = req.body;
+        const authHeader = req.headers.authorization;
+        if (!authHeader) {
+            return res.status(401).json({ message: 'Authorization token required' });
+        }
+        const token = authHeader.split(' ')[1];
+        const decoded = jwt.verify(token, JWT_SECRET);
+        author_id = decoded.id;
+
+        const { title, description, publisher } = req.body;
         let coverImage = null;
 
         // Validate input
-        if (!title || !description || !author || !publisher) {
-            return res.status(400).json({ message: 'All fields are required' });
+        if (!title || !description) {
+            return res.status(400).json({ message: 'Title and description are required' });
         }
 
         try {
@@ -62,16 +72,16 @@ const addBook = (req, res) => {
             const newBook = await Book.create({
                 title,
                 description,
-                author,
+                author_id,
                 publisher,
             });
 
             // After creating the book, rename the uploaded cover image with the book's ID
             if (req.file) {
-                coverImage = `uploads/${newBook.id}${path.extname(req.file.originalname)}`; // Use book ID as the image name
+                coverImage = `uploads/book-cover/${newBook.id}${path.extname(req.file.originalname)}`; // Use book ID as the image name
                 const fs = require('fs');
                 const oldPath = req.file.path;
-                const newPath = `./uploads/${newBook.id}${path.extname(req.file.originalname)}`;
+                const newPath = `./uploads/book-cover/${newBook.id}${path.extname(req.file.originalname)}`;
                 
                 // Rename the file to match the book's ID
                 fs.rename(oldPath, newPath, (err) => {
@@ -160,4 +170,54 @@ const editBook = (req, res) => {
     });
 };
 
-module.exports = { getBooks, addBook, editBook };
+const getBookDetails = async (req, res) => {
+    const { id } = req.params; // Book ID from URL parameters
+
+    try {
+        // Find the book by ID, including its author and chapters
+        const book = await Book.findOne({
+            where: { id },
+            include: [
+                {
+                    model: User,
+                    as: 'author', // Alias for the author relation
+                    attributes: ['id', 'name'], // Get only the necessary fields
+                },
+                {
+                    model: Chapter,
+                    attributes: ['chapter_id', 'chapter_title', 'updatedAt'], // Get chapter details
+                    order: [['chapter_id', 'ASC']], // Order chapters by chapter ID
+                }
+            ]
+        });
+
+        // If the book is not found, return a 404 error
+        if (!book) {
+            return res.status(404).json({ message: 'Book not found' });
+        }
+
+        const lastChapterUpdate = book.Chapters.reduce((latest, chapter) => {
+            return chapter.updatedAt > latest ? chapter.updatedAt : latest;
+        }, book.updatedAt);
+
+        // Format the book details with chapters
+        const bookDetails = {
+            title: book.title,
+            synopsis: book.description,
+            author: book.author ? book.author.name : 'Unknown', // Show author's username or "Unknown"
+            lastUpdated: lastChapterUpdate,
+            chapters: book.Chapters.map(chapter => ({
+                chapterNumber: chapter.chapter_id,
+                title: chapter.chapter_title
+            }))
+        };
+
+        // Send the formatted book details as a response
+        res.status(200).json(bookDetails);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Failed to fetch book details' });
+    }
+};
+
+module.exports = { getBooks, addBook, editBook, getBookDetails };

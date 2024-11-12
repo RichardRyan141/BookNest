@@ -20,3 +20,12 @@ app.use('/users', userRoutes);
 
 const bookRoutes = require('./routes/bookRoutes');
 app.use('/books', bookRoutes);
+
+const historyRoutes = require('./routes/historyRoutes');
+app.use('/history', historyRoutes);
+
+const purchaseRoutes = require('./routes/purchaseRoutes');
+app.use('/buy-chapter', purchaseRoutes);
+
+const communityRoutes = require('./routes/communityRoutes');
+app.use('/community', communityRoutes);
