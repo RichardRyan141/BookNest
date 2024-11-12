@@ -88,7 +88,7 @@ const Profile = () => {
       <div className="flex max-w-3xl mx-auto gap-2 px-2">
         <button
           onClick={() => setSelectedPage("profile")}
-          className={`px-4 py-2  font-semibold text-white  rounded-t
+          className={`px-4 py-2  font-semibold rounded-t
             ${
               selectedPage === "profile"
                 ? "bg-blue-600 text-white"
@@ -99,7 +99,7 @@ const Profile = () => {
         </button>
         <button
           onClick={() => setSelectedPage("rewards")}
-          className={`px-4 py-2  font-semibold   rounded-t
+          className={`px-4 py-2  font-semibold rounded-t
             ${
               selectedPage === "rewards"
                 ? "bg-blue-600 text-white"
@@ -265,6 +265,9 @@ const Profile = () => {
             </div>
 
             {/* Draggable or Scrollable Missions Section */}
+            <h3 className="text-2xl font-semibold mb-4 text-blue-600">
+              🎯 Mission to Complete
+            </h3>
             <div className="mt-4 overflow-y-auto max-h-72 bg-white border border-gray-200 rounded-lg shadow p-3">
               <ul className="space-y-3">
                 {rewardData.missions.map((mission) => (
