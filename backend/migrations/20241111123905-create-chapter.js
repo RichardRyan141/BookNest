@@ -2,40 +2,33 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Books', {
+    await queryInterface.createTable('Chapters', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      title: {
-        type: Sequelize.STRING
+      chapter_id: {
+        type: Sequelize.INTEGER
       },
-      description: {
-        type: Sequelize.TEXT
-      },
-      cover_img: {
-        type: Sequelize.STRING
-      },
-      status: {
+      chapter_title: {
         type: Sequelize.STRING,
-        defaultValue: 'ongoing'
       },
-      author_id: {
+      book_id: {
         type: Sequelize.INTEGER,
         references: {
           model: {
-            tableName: 'Users',
+            tableName: 'Books',
             schema: 'public'  // Specify the schema explicitly
-          },      
-          key: 'id'
+          },   
+          key: 'id' // The column in 'Books' that 'book_id' references
         },
-        onDelete: 'CASCADE',
-        onUpdate: 'CASCADE'
+        onDelete: 'CASCADE', // Optional: Delete chapters when a book is deleted
+        onUpdate: 'CASCADE'  // Optional: Update chapters if the book id changes
       },
-      publisher: {
-        type: Sequelize.STRING
+      content: {
+        type: Sequelize.TEXT
       },
       createdAt: {
         allowNull: false,
@@ -50,6 +43,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Books');
+    await queryInterface.dropTable('Chapters');
   }
 };
