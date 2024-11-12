@@ -23,6 +23,11 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false,
     },
+    credits: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      defaultValue: 0,
+    },
     createdAt: {
       type: DataTypes.DATE,
       defaultValue: DataTypes.NOW,
@@ -42,6 +47,12 @@ module.exports = (sequelize, DataTypes) => {
     });
 
     User.hasMany(models.ReadingHistory, {
+      foreignKey: 'user_id',
+      onDelete: 'CASCADE',
+      onUpdate: 'CASCADE',
+    });
+
+    User.hasMany(models.ChapterPurchaseHistory, {
       foreignKey: 'user_id',
       onDelete: 'CASCADE',
       onUpdate: 'CASCADE',

@@ -1,4 +1,4 @@
-const { Book, Chapter, ReadingHistory } = require('../models'); // Assuming you have a Chapter model
+const { Book, Chapter, ReadingHistory, ChapterPurchaseHistory } = require('../models'); // Assuming you have a Chapter model
 const jwt = require('jsonwebtoken');
 const JWT_SECRET = process.env.JWT_SECRET || "03f166d26bab9394365d354cdba95cea17936b4df707e41a24d1d51769dfee58";
 
@@ -8,10 +8,13 @@ const getChapter = async (req, res) => {
 
     try {
         let userId = null;
+        let userLoggedIn = false;
+
         if (authHeader) {
             const token = authHeader.split(' ')[1];
             const decoded = jwt.verify(token, JWT_SECRET);
             userId = decoded.id;
+            userLoggedIn = true;
         }
 
         const chapterRecord = await Chapter.findOne({
@@ -22,26 +25,43 @@ const getChapter = async (req, res) => {
         });
 
         if (chapterRecord) {
-            if (userId) {
-                await ReadingHistory.destroy({
+            if (chapterRecord.price === 0 || 
+                (userLoggedIn && await ChapterPurchaseHistory.findOne({
                     where: {
                         user_id: userId,
-                        book_id: bookId
+                        book_id: bookId,
+                        chapter_id: chapterRecord.id
                     }
+                }))) {
+                
+                if (userLoggedIn) {
+                    await ReadingHistory.destroy({
+                        where: {
+                            user_id: userId,
+                            book_id: bookId
+                        }
+                    });
+
+                    await ReadingHistory.create({
+                        user_id: userId,
+                        book_id: bookId,
+                        chapter_id: chapterRecord.id,
+                        timestamp: new Date()
+                    });
+                }
+
+                res.status(200).json({
+                    title: chapterRecord.chapter_title,
+                    content: chapterRecord.content
                 });
 
-                await ReadingHistory.create({
-                    user_id: userId,
-                    book_id: bookId,
-                    chapter_id: chapterRecord.id,
-                    timestamp: new Date()
-                });
+            } else {
+                if (userLoggedIn) {
+                    return res.status(403).json({ message: 'You must purchase this chapter to read it.' });
+                } else {
+                    return res.status(401).json({ message: 'You must be logged in to purchase this chapter.' });
+                }
             }
-
-            res.status(200).json({
-                title: chapterRecord.chapter_title,
-                content: chapterRecord.content
-            });
         } else {
             res.status(404).json({ message: 'Chapter not found' });
         }
@@ -54,6 +74,7 @@ const getChapter = async (req, res) => {
 // Create a new chapter for a book
 const createChapter = async (req, res) => {
     const { bookId, chapterTitle, content } = req.body;
+    const authHeader = req.headers.authorization;
 
     // Validate input
     if (!bookId || !chapterTitle || !content) {
@@ -61,14 +82,27 @@ const createChapter = async (req, res) => {
     }
 
     try {
-        // Ensure the book exists before creating a chapter
-        const bookExists = await Book.findByPk(bookId);
+        let userId = null;
+        if (authHeader) {
+            const token = authHeader.split(' ')[1];
+            const decoded = jwt.verify(token, JWT_SECRET);
+            userId = decoded.id;
+        }
 
-        if (!bookExists) {
+        if (!userId) {
+            return res.status(401).json({ message: 'You must be logged in to create a chapter' });
+        }
+
+        const book = await Book.findByPk(bookId);
+
+        if (!book) {
             return res.status(404).json({ message: 'Book not found' });
         }
 
-        // Get the count of existing chapters for this book
+        if (book.user_id !== userId) {
+            return res.status(403).json({ message: 'You are not the author of this book' });
+        }
+
         const chapterCount = await Chapter.count({
             where: {
                 bookId: bookId  // Count the chapters that belong to this book

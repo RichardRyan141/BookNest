@@ -20,6 +20,11 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.TEXT,
       allowNull: false, // Content of the chapter
     },
+    price: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      defaultValue: 0,
+    },
   });
 
   Chapter.associate = function (models) {
@@ -31,6 +36,12 @@ module.exports = (sequelize, DataTypes) => {
     });
 
     Chapter.hasMany(models.ReadingHistory, {
+      foreignKey: 'chapter_id',
+      onDelete: 'CASCADE',
+      onUpdate: 'CASCADE',
+    });
+
+    Chapter.hasMany(models.ChapterPurchaseHistory, {
       foreignKey: 'chapter_id',
       onDelete: 'CASCADE',
       onUpdate: 'CASCADE',

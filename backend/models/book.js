@@ -66,6 +66,12 @@ module.exports = (sequelize, DataTypes) => {
       onDelete: 'CASCADE',
       onUpdate: 'CASCADE',
     });
+
+    Book.hasMany(models.ChapterPurchaseHistory, {
+      foreignKey: 'book_id',
+      onDelete: 'CASCADE',
+      onUpdate: 'CASCADE',
+    });
   };
 
   return Book;

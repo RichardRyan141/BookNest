@@ -2,37 +2,48 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Chapters', {
+    await queryInterface.createTable('ChapterPurchaseHistories', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      chapter_id: {
-        type: Sequelize.INTEGER
-      },
-      chapter_title: {
-        type: Sequelize.STRING,
+      user_id: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: {
+            tableName: 'Users',
+            schema: 'public'
+          },   
+          key: 'id'
+        },
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE'
       },
       book_id: {
         type: Sequelize.INTEGER,
         references: {
           model: {
             tableName: 'Books',
-            schema: 'public'  // Specify the schema explicitly
+            schema: 'public'
           },   
-          key: 'id' // The column in 'Books' that 'book_id' references
+          key: 'id'
         },
-        onDelete: 'CASCADE', // Optional: Delete chapters when a book is deleted
-        onUpdate: 'CASCADE'  // Optional: Update chapters if the book id changes
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE'
       },
-      content: {
-        type: Sequelize.TEXT
-      },
-      price: {
+      chapter_id: {
         type: Sequelize.INTEGER,
-        defaultValue: 0
+        references: {
+          model: {
+            tableName: 'Chapters',
+            schema: 'public'
+          },   
+          key: 'id'
+        },
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE'
       },
       createdAt: {
         allowNull: false,
@@ -47,6 +58,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Chapters');
+    await queryInterface.dropTable('ChapterPurchaseHistories');
   }
 };
