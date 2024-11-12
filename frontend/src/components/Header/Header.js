@@ -6,17 +6,18 @@ import RegisterForm from "../RegisterForm/RegisterForm";
 import { jwtDecode } from "jwt-decode";
 import { Link } from "react-router-dom";
 import { NavLink } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
+import { useAuth } from "../AuthContext/AuthContext";
 
 const Header = () => {
+  const { isAuthenticated, setIsAuthenticated } = useAuth();
+  const navigate = useNavigate();
   const [showLogin, setShowLogin] = useState(false);
   const [showRegister, setShowRegister] = useState(false);
-  const [isAuthenticated, setIsAuthenticated] = useState(false); // State to track authentication
+  // const [isAuthenticated, setIsAuthenticated] = useState(false); // State to track authentication
 
   // Check if the user is logged in (if token exists in localStorage)
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    setIsAuthenticated(!!token); // Set state based on token existence
-  }, []);
 
   const openLoginForm = () => {
     setShowLogin(true);
@@ -34,34 +35,42 @@ const Header = () => {
   };
 
   const logout = async () => {
-    // const token = localStorage.getItem("token");
+    const token = localStorage.getItem("token");
 
-    // if (!token) {
-    //   console.log("No token found");
-    //   return;
-    // }
+    if (!token) {
+      console.log("No token found");
+      return;
+    }
 
-    // // Decode the JWT to extract userId (you can use a library like jwt-decode)
-    // const decodedToken = jwtDecode(token);
-    // const userId = decodedToken?.id; // Assuming your token has an `id` field for userId
+    // Decode the JWT to extract userId (you can use a library like jwt-decode)
+    const decodedToken = jwtDecode(token);
+    const userId = decodedToken?.id; // Assuming your token has an `id` field for userId
 
-    // if (!userId) {
-    //   console.log("User ID not found in token");
-    //   return;
-    // }
+    if (!userId) {
+      console.log("User ID not found in token");
+      return;
+    }
 
-    // // Call the backend logout API
-    // await fetch("http://localhost:5000/users/logout", {
-    //   method: "POST",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //   },
-    //   body: JSON.stringify({ userId }), // Send userId in request body
-    // });
+    // Call the backend logout API
+    await fetch("http://localhost:5000/users/logout", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ userId }), // Send userId in request body
+    });
 
     // Remove token from localStorage and update state
     localStorage.removeItem("token");
     setIsAuthenticated(false);
+    navigate("/");
+    await Swal.fire({
+      icon: "success",
+      title: "Logout Successful",
+      text: "See you again!",
+      timer: 2000,
+      showConfirmButton: false,
+    });
     console.log("Logged out successfully");
   };
 
@@ -107,6 +116,13 @@ const Header = () => {
             <div className="flex items-center lg:order-2">
               {isAuthenticated ? (
                 <>
+                  <Link to="/inbox">
+                    <img
+                      className="w-10 h-10 rounded mr-2"
+                      src="/mail.png"
+                      alt="Inbox"
+                    />
+                  </Link>
                   <Link to="/profile">
                     <img
                       className="w-10 h-10 rounded"
@@ -213,7 +229,7 @@ const Header = () => {
                 </li>
                 <li>
                   <NavLink
-                    to="/page2"
+                    to="/marketplace"
                     className={({ isActive }) =>
                       `block py-2 pr-4 pl-3 rounded lg:bg-transparent lg:p-0 ${
                         isActive
@@ -222,7 +238,7 @@ const Header = () => {
                       }`
                     }
                   >
-                    Page 2
+                    Market
                   </NavLink>
                 </li>
                 <li>
