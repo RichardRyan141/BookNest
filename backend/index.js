@@ -23,3 +23,6 @@ app.use('/books', bookRoutes);
 
 const historyRoutes = require('./routes/historyRoutes');
 app.use('/history', historyRoutes);
+
+const purchaseRoutes = require('./routes/purchaseRoutes');
+app.use('/buy-chapter', purchaseRoutes);
