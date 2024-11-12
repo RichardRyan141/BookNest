@@ -144,6 +144,7 @@ const createCommunity = (req, res) => {
             await CommunityMember.create({
                 user_id: userId,
                 community_id: newCommunity.id,
+                role: 'owner'
             });
 
             res.status(201).json({
@@ -158,7 +159,7 @@ const createCommunity = (req, res) => {
 };
 
 const joinCommunity = async (req, res) => {
-    const { communityId } = req.body;
+    const { communityId } = req.params;
     const authHeader = req.headers.authorization;
 
     if (!communityId) {
@@ -190,7 +191,8 @@ const joinCommunity = async (req, res) => {
 
         res.status(201).json({
             message: 'Joined community successfully',
-            member: newCommunityMember
+            member: newCommunityMember,
+            role: 'member'
         });
     } catch (error) {
         console.error(error);
@@ -199,7 +201,7 @@ const joinCommunity = async (req, res) => {
 };
 
 const leaveCommunity = async (req, res) => {
-    const { communityId } = req.body;
+    const { communityId } = req.params;
     const authHeader = req.headers.authorization;
 
     if (!communityId) {
@@ -224,6 +226,25 @@ const leaveCommunity = async (req, res) => {
             return res.status(404).json({ message: 'Community not found' });
         }
 
+        if (community.creator_id === userId) {
+            const earliestAdmin = await CommunityMember.findOne({
+                where: {
+                    community_id: communityId,
+                    role: 'admin'
+                },
+                order: [['createdAt', 'ASC']]
+            });
+
+            if (earliestAdmin) {
+                await community.update({ creator_id: earliestAdmin.user_id });
+                await earliestAdmin.update({ role: 'owner' })
+            } else {
+                return res.status(403).json({
+                    message: 'You cannot leave the community because there are no other admins to take over ownership'
+                });
+            }
+        }
+
         await CommunityMember.destroy({
             where: {
                 user_id: userId,
@@ -240,4 +261,100 @@ const leaveCommunity = async (req, res) => {
     }
 };
 
-module.exports = { getCommunities, getCommunityDetails, createCommunity, joinCommunity, leaveCommunity };
+const promoteDemoteMember = async (req, res) => {
+    const { communityId, memberId, newRoleId } = req.body;
+    const authHeader = req.headers.authorization;
+
+    const ROLE_MEMBER = 1;
+    const ROLE_MODERATOR = 2;
+    const ROLE_ADMIN = 3;
+
+    if (!communityId || !memberId || !newRoleId) {
+        return res.status(400).json({ message: 'Community ID, member ID, and new role ID are required' });
+    }
+
+    try {
+        let userId = null;
+        if (authHeader) {
+            const token = authHeader.split(' ')[1];
+            const decoded = jwt.verify(token, JWT_SECRET);
+            userId = decoded.id;
+        }
+
+        if (!userId) {
+            return res.status(401).json({ message: 'You must be logged in to perform this action' });
+        }
+
+        const community = await Community.findByPk(communityId);
+        if (!community) {
+            return res.status(404).json({ message: 'Community not found' });
+        }
+
+        const promoter = await CommunityMember.findOne({
+            where: {
+                user_id: userId,
+                community_id: communityId
+            }
+        });
+
+        const member = await CommunityMember.findOne({
+            where: {
+                user_id: memberId,
+                community_id: communityId
+            }
+        });
+
+        if (!promoter) {
+            return res.status(403).json({ message: 'You are not a member of this community' });
+        }
+
+        if (!member) {
+            return res.status(404).json({ message: 'Member is not a part of this community' });
+        }
+
+        const isOwner = community.creator_id === userId;
+        const isAdmin = promoter.role == "admin";
+
+        if (newRoleId === ROLE_ADMIN && !isOwner) {
+            return res.status(403).json({ message: 'Only the community owner can promote a user to admin' });
+        }
+        if (newRoleId === ROLE_MODERATOR && !isOwner && !isAdmin) {
+            return res.status(403).json({ message: 'Only the community owner or an admin can promote a user to moderator' });
+        }
+        if (newRoleId === ROLE_MODERATOR && member.role == "admin" && !isOwner) {
+            return res.status(403).json({ message: 'Only the community owner can demote an admin to moderator' });
+        }
+        if (newRoleId === ROLE_MEMBER && member.role == "admin" && !isOwner) {
+            return res.status(403).json({ message: 'Only the community owner can demote an admin to member' });
+        }
+        if (newRoleId === ROLE_MEMBER && member.role == "moderator") {
+            return res.status(403).json({ message: 'Only the community owner or an admin can demote a moderator to member' });
+        }
+
+        let newRole = null;
+        if (newRoleId === ROLE_MEMBER) {
+            newRole = 'member';
+        }
+        if (newRoleId === ROLE_MODERATOR) {
+            newRole = 'moderator';
+        }
+        if (newRoleId === ROLE_ADMIN) {
+            newRole = 'admin';
+        }
+
+        await member.update({ role: newRole })
+
+        res.status(200).json({
+            message: 'Member role updated successfully',
+            member: {
+                user_id: member.user_id,
+                new_role: newRole
+            }
+        });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Server error' });
+    }
+};
+
+module.exports = { getCommunities, getCommunityDetails, createCommunity, joinCommunity, leaveCommunity, promoteDemoteMember };

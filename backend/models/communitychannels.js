@@ -1,22 +1,22 @@
 module.exports = (sequelize, DataTypes) => {
-  const CommunityMember = sequelize.define('CommunityMember', {
+  const CommunityChannel = sequelize.define('CommunityChannel', {
     id: {
       type: DataTypes.INTEGER,
       primaryKey: true,
       autoIncrement: true,
     },
-    user_id: {
-      type: DataTypes.INTEGER,
+    name: {
+      type: DataTypes.STRING,
       allowNull: false,
     },
     community_id: {
       type: DataTypes.INTEGER,
       allowNull: false,
     },
-    role: {
+    visibility: {
       type: DataTypes.STRING,
       allowNull: false,
-      defaultValue: 'member',
+      defaultValue: 'members only',
     },
     createdAt: {
       type: DataTypes.DATE,
@@ -29,18 +29,13 @@ module.exports = (sequelize, DataTypes) => {
   });
 
   // Associations
-  CommunityMember.associate = function (models) {
-    CommunityMember.belongsTo(models.User, {
-      foreignKey: 'user_id',
-      onDelete: 'CASCADE',
-      onUpdate: 'CASCADE',
-    });
-    CommunityMember.belongsTo(models.Community, {
+  CommunityChannel.associate = function (models) {
+    CommunityChannel.belongsTo(models.Community, {
       foreignKey: 'community_id',
       onDelete: 'CASCADE',
       onUpdate: 'CASCADE',
     });
   };
 
-  return CommunityMember;
+  return CommunityChannel;
 };

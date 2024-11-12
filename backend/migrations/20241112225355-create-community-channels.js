@@ -2,24 +2,15 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('CommunityMembers', {
+    await queryInterface.createTable('CommunityChannels', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      user_id: {
-        type: Sequelize.INTEGER,
-        references: {
-          model: {
-            tableName: 'Users',
-            schema: 'public'
-          },   
-          key: 'id'
-        },
-        onDelete: 'CASCADE',
-        onUpdate: 'CASCADE'
+      name: {
+        type: Sequelize.STRING
       },
       community_id: {
         type: Sequelize.INTEGER,
@@ -33,9 +24,9 @@ module.exports = {
         onDelete: 'CASCADE',
         onUpdate: 'CASCADE'
       },
-      role: {
+      visibility: {
         type: Sequelize.STRING,
-        defaultValue: 'member'
+        defaultValue: 'members only'
       },
       createdAt: {
         allowNull: false,
@@ -50,6 +41,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('CommunityMembers');
+    await queryInterface.dropTable('CommunityChannels');
   }
 };

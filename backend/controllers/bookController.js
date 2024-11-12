@@ -55,9 +55,15 @@ const addBook = (req, res) => {
         if (!authHeader) {
             return res.status(401).json({ message: 'Authorization token required' });
         }
-        const token = authHeader.split(' ')[1];
-        const decoded = jwt.verify(token, JWT_SECRET);
-        author_id = decoded.id;
+
+        let author_id;
+        try {
+            const token = authHeader.split(' ')[1];
+            const decoded = jwt.verify(token, JWT_SECRET);
+            author_id = decoded.id;
+        } catch (error) {
+            return res.status(401).json({ message: 'Invalid or expired token' });
+        }
 
         const { title, description, publisher } = req.body;
         let coverImage = null;
@@ -80,17 +86,8 @@ const addBook = (req, res) => {
             if (req.file) {
                 coverImage = `uploads/book-cover/${newBook.id}${path.extname(req.file.originalname)}`; // Use book ID as the image name
                 const fs = require('fs');
-                const oldPath = req.file.path;
-                const newPath = `./uploads/book-cover/${newBook.id}${path.extname(req.file.originalname)}`;
-                
-                // Rename the file to match the book's ID
-                fs.rename(oldPath, newPath, (err) => {
-                    if (err) {
-                        console.error(err);
-                    } else {
-                        console.log('File renamed successfully');
-                    }
-                });
+
+                await fs.promises.rename(req.file.path, coverImage);
             }
 
             // Update the book's record with the cover image
@@ -115,6 +112,20 @@ const editBook = (req, res) => {
             return res.status(400).json({ message: err.message });
         }
 
+        const authHeader = req.headers.authorization;
+        if (!authHeader) {
+            return res.status(401).json({ message: 'Authorization token required' });
+        }
+
+        let author_id;
+        try {
+            const token = authHeader.split(' ')[1];
+            const decoded = jwt.verify(token, JWT_SECRET);
+            author_id = decoded.id;
+        } catch (error) {
+            return res.status(401).json({ message: 'Invalid or expired token' });
+        }
+
         const { id } = req.params; // Get the book ID from the URL parameters
         const { title, description, status } = req.body;
         let coverImage = null;
@@ -132,6 +143,10 @@ const editBook = (req, res) => {
                 return res.status(404).json({ message: 'Book not found' });
             }
 
+            if (existingBook.author_id != author_id) {
+                return res.status(403).json({ message: 'You are not the author of this book' });
+            }
+
             // Update book details
             existingBook.title = title;
             existingBook.description = description;
@@ -139,19 +154,9 @@ const editBook = (req, res) => {
             
             // Handle updating the cover image
             if (req.file) {
-                coverImage = `uploads/${existingBook.id}${path.extname(req.file.originalname)}`;
+                coverImage = `uploads/book-cover/${existingBook.id}${path.extname(req.file.originalname)}`;
                 const fs = require('fs');
-                const oldPath = req.file.path;
-                const newPath = `./uploads/${existingBook.id}${path.extname(req.file.originalname)}`;
-
-                // Rename the file to match the book's ID
-                fs.rename(oldPath, newPath, (err) => {
-                    if (err) {
-                        console.error(err);
-                    } else {
-                        console.log('File renamed successfully');
-                    }
-                });
+                await fs.promises.rename(req.file.path, coverImage);
 
                 existingBook.coverImage = coverImage;
             }
