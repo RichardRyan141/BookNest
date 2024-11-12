@@ -7,11 +7,10 @@ module.exports = (sequelize, DataTypes) => {
     },
     chapter_id: {
       type: DataTypes.INTEGER,
-      allowNull: false, // Chapter number, cannot be null
+      allowNull: false,
     },
     chapter_title: {
       type: DataTypes.STRING,
-      allowNull: false, // Chapter number, cannot be null
     },
     book_id: {
       type: DataTypes.INTEGER,

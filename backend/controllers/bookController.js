@@ -1,4 +1,4 @@
-const { Book } = require('../models');
+const { Book, Chapter, User } = require('../models');
 const multer = require('multer');
 const path = require('path');
 
@@ -160,4 +160,54 @@ const editBook = (req, res) => {
     });
 };
 
-module.exports = { getBooks, addBook, editBook };
+const getBookDetails = async (req, res) => {
+    const { id } = req.params; // Book ID from URL parameters
+
+    try {
+        // Find the book by ID, including its author and chapters
+        const book = await Book.findOne({
+            where: { id },
+            include: [
+                {
+                    model: User,
+                    as: 'author', // Alias for the author relation
+                    attributes: ['id', 'name'], // Get only the necessary fields
+                },
+                {
+                    model: Chapter,
+                    attributes: ['chapter_id', 'chapter_title', 'updatedAt'], // Get chapter details
+                    order: [['chapter_id', 'ASC']], // Order chapters by chapter ID
+                }
+            ]
+        });
+
+        // If the book is not found, return a 404 error
+        if (!book) {
+            return res.status(404).json({ message: 'Book not found' });
+        }
+
+        const lastChapterUpdate = book.Chapters.reduce((latest, chapter) => {
+            return chapter.updatedAt > latest ? chapter.updatedAt : latest;
+        }, book.updatedAt);
+
+        // Format the book details with chapters
+        const bookDetails = {
+            title: book.title,
+            synopsis: book.description,
+            author: book.author ? book.author.name : 'Unknown', // Show author's username or "Unknown"
+            lastUpdated: lastChapterUpdate,
+            chapters: book.Chapters.map(chapter => ({
+                chapterNumber: chapter.chapter_id,
+                title: chapter.chapter_title
+            }))
+        };
+
+        // Send the formatted book details as a response
+        res.status(200).json(bookDetails);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Failed to fetch book details' });
+    }
+};
+
+module.exports = { getBooks, addBook, editBook, getBookDetails };

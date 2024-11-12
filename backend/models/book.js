@@ -50,9 +50,10 @@ module.exports = (sequelize, DataTypes) => {
     // A book belongs to a user (author)
     Book.belongsTo(models.User, {
       foreignKey: 'author_id',
+      as: 'author', // Alias the relationship as 'author'
       onDelete: 'CASCADE',
       onUpdate: 'CASCADE',
-    });
+  });
     // A book has many chapters
     Book.hasMany(models.Chapter, {
       foreignKey: 'book_id',
