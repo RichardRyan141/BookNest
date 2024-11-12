@@ -1,11 +1,19 @@
-const { Book, Chapter } = require('../models'); // Assuming you have a Chapter model
+const { Book, Chapter, ReadingHistory } = require('../models'); // Assuming you have a Chapter model
+const jwt = require('jsonwebtoken');
+const JWT_SECRET = process.env.JWT_SECRET || "03f166d26bab9394365d354cdba95cea17936b4df707e41a24d1d51769dfee58";
 
-// Get a specific chapter from a book
 const getChapter = async (req, res) => {
     const { bookId, chapter } = req.params;
+    const authHeader = req.headers.authorization;
 
     try {
-        // Fetch the chapter based on book ID and chapter number
+        let userId = null;
+        if (authHeader) {
+            const token = authHeader.split(' ')[1];
+            const decoded = jwt.verify(token, JWT_SECRET);
+            userId = decoded.id;
+        }
+
         const chapterRecord = await Chapter.findOne({
             where: {
                 book_id: bookId,
@@ -13,8 +21,23 @@ const getChapter = async (req, res) => {
             }
         });
 
-        // If the chapter is found, return it
         if (chapterRecord) {
+            if (userId) {
+                await ReadingHistory.destroy({
+                    where: {
+                        user_id: userId,
+                        book_id: bookId
+                    }
+                });
+
+                await ReadingHistory.create({
+                    user_id: userId,
+                    book_id: bookId,
+                    chapter_id: chapterRecord.id,
+                    timestamp: new Date()
+                });
+            }
+
             res.status(200).json({
                 title: chapterRecord.chapter_title,
                 content: chapterRecord.content

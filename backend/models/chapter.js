@@ -29,6 +29,12 @@ module.exports = (sequelize, DataTypes) => {
       onDelete: 'CASCADE',  // Deletes chapters if the associated book is deleted
       onUpdate: 'CASCADE',  // Updates the chapters if the book's ID changes
     });
+
+    Chapter.hasMany(models.ReadingHistory, {
+      foreignKey: 'chapter_id',
+      onDelete: 'CASCADE',
+      onUpdate: 'CASCADE',
+    });
   };
 
   return Chapter;

@@ -20,3 +20,6 @@ app.use('/users', userRoutes);
 
 const bookRoutes = require('./routes/bookRoutes');
 app.use('/books', bookRoutes);
+
+const historyRoutes = require('./routes/historyRoutes');
+app.use('/history', historyRoutes);
