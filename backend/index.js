@@ -26,3 +26,6 @@ app.use('/history', historyRoutes);
 
 const purchaseRoutes = require('./routes/purchaseRoutes');
 app.use('/buy-chapter', purchaseRoutes);
+
+const communityRoutes = require('./routes/communityRoutes');
+app.use('/community', communityRoutes);
