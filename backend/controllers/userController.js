@@ -50,8 +50,8 @@ const registerUser = async (req, res) => {
         const hashedPassword = await bcrypt.hash(password, 10);
 
         // Insert new user into the database
-        const insertUserQuery = 'INSERT INTO public."Users" (name, role, email, password, "createdAt") VALUES ($1, $2, $3, $4, CURRENT_TIMESTAMP) RETURNING *';
-        const newUser = await pool.query(insertUserQuery, [username, 'user', email, hashedPassword]);
+        const insertUserQuery = 'INSERT INTO public."Users" (name, role, email, password, credits, "createdAt") VALUES ($1, $2, $3, $4, $5, CURRENT_TIMESTAMP) RETURNING *';
+        const newUser = await pool.query(insertUserQuery, [username, 'user', email, hashedPassword, 0]);
 
         // Generate a JWT token
         const token = jwt.sign({ id: newUser.rows[0].id }, JWT_SECRET, { expiresIn: '1h' });
