@@ -15,6 +15,9 @@ import CommunityDetail from "./components/CommunityPage/CommunityDetail";
 import MarketPage from "./components/MarketPage/MarketPage";
 import InboxPage from "./components/InboxPage/Inbox";
 import { AuthProvider } from "./components/AuthContext/AuthContext";
+import BookList from "./components/BookPage/BookList";
+import BookDetail from "./components/BookPage/BookDetail";
+import CreateBook from "./components/BookPage/CreateBook";
 
 const router = createBrowserRouter([
   {
@@ -79,6 +82,30 @@ const router = createBrowserRouter([
     element: (
       <Layout>
         <InboxPage />
+      </Layout>
+    ),
+  },
+  {
+    path: "/booklist",
+    element: (
+      <Layout>
+        <BookList />
+      </Layout>
+    ),
+  },
+  {
+    path: "/book/:id",
+    element: (
+      <Layout>
+        <BookDetail />
+      </Layout>
+    ),
+  },
+  {
+    path: "/book/create",
+    element: (
+      <Layout>
+        <CreateBook />
       </Layout>
     ),
   },

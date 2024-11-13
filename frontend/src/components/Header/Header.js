@@ -116,9 +116,13 @@ const Header = () => {
             <div className="flex items-center lg:order-2">
               {isAuthenticated ? (
                 <>
+                  <div className="text-xl font-semibold text-white bg-gradient-to-r from-blue-500 to-green-500 rounded-full py-2 px-6 shadow-lg mr-3">
+                    ${(150.75).toFixed(2)}
+                  </div>
+
                   <Link
                     to="/inbox"
-                    className="flex items-center px-3 py-2 border border-blue-500 rounded-full outline-none hover:bg-blue-50 focus:ring-2 focus:ring-blue-300 transition duration-200 ease-in-out mr-3"
+                    className="flex items-center px-3 py-2 border border-blue-200 rounded-full outline-none hover:bg-blue-50 focus:ring-2 focus:ring-blue-300 transition duration-200 ease-in-out mr-3"
                   >
                     <span
                       className="text-2xl mr-2"
@@ -222,6 +226,20 @@ const Header = () => {
                 </li>
                 <li>
                   <NavLink
+                    to="/booklist"
+                    className={({ isActive }) =>
+                      `block py-2 pr-4 pl-3 rounded lg:bg-transparent lg:p-0 ${
+                        isActive
+                          ? "text-white bg-blue-700 lg:text-blue-700"
+                          : "text-gray-700 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-blue-700 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-700 lg:dark:hover:bg-transparent dark:border-gray-700"
+                      }`
+                    }
+                  >
+                    Books
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink
                     to="/community"
                     className={({ isActive }) =>
                       `block py-2 pr-4 pl-3 rounded lg:bg-transparent lg:p-0 ${
@@ -246,20 +264,6 @@ const Header = () => {
                     }
                   >
                     Market
-                  </NavLink>
-                </li>
-                <li>
-                  <NavLink
-                    to="/page3"
-                    className={({ isActive }) =>
-                      `block py-2 pr-4 pl-3 rounded lg:bg-transparent lg:p-0 ${
-                        isActive
-                          ? "text-white bg-blue-700 lg:text-blue-700"
-                          : "text-gray-700 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-blue-700 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-700 lg:dark:hover:bg-transparent dark:border-gray-700"
-                      }`
-                    }
-                  >
-                    Page 3
                   </NavLink>
                 </li>
               </ul>
