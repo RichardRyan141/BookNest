@@ -10,13 +10,15 @@ const getChapter = async (req, res) => {
         let userId = null;
         let userLoggedIn = false;
 
-        try {
-            const token = authHeader.split(' ')[1];
-            const decoded = jwt.verify(token, JWT_SECRET);
-            userId = decoded.id;
-            userLoggedIn = true;
-        } catch (error) {
-            return res.status(401).json({ message: 'Invalid or expired token' });
+        if (authHeader) {
+            try {
+                const token = authHeader.split(' ')[1];
+                const decoded = jwt.verify(token, JWT_SECRET);
+                userId = decoded.id;
+                userLoggedIn = true;
+            } catch (error) {
+                return res.status(401).json({ message: 'Invalid or expired token' });
+            }
         }
 
         const chapterRecord = await Chapter.findOne({
