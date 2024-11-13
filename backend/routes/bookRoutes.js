@@ -10,6 +10,6 @@ router.get('/:id', getBookDetails);
 router.put('/:id', editBook);
 
 router.get('/:bookId/:chapter', getChapter);
-router.post(':bookId/chapters', createChapter);
+router.post('/:bookId/chapters', createChapter);
 
 module.exports = router;
