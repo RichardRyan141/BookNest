@@ -10,11 +10,13 @@ const getChapter = async (req, res) => {
         let userId = null;
         let userLoggedIn = false;
 
-        if (authHeader) {
+        try {
             const token = authHeader.split(' ')[1];
             const decoded = jwt.verify(token, JWT_SECRET);
             userId = decoded.id;
             userLoggedIn = true;
+        } catch (error) {
+            return res.status(401).json({ message: 'Invalid or expired token' });
         }
 
         const chapterRecord = await Chapter.findOne({
@@ -25,15 +27,15 @@ const getChapter = async (req, res) => {
         });
 
         if (chapterRecord) {
-            if (chapterRecord.price === 0 || 
+            const hasAccess = chapterRecord.price === 0 || 
                 (userLoggedIn && await ChapterPurchaseHistory.findOne({
                     where: {
                         user_id: userId,
                         book_id: bookId,
                         chapter_id: chapterRecord.id
                     }
-                }))) {
-                
+                }));
+            if (hasAccess) {
                 if (userLoggedIn) {
                     await ReadingHistory.destroy({
                         where: {
@@ -73,7 +75,7 @@ const getChapter = async (req, res) => {
 
 // Create a new chapter for a book
 const createChapter = async (req, res) => {
-    const { bookId, chapterTitle, content } = req.body;
+    const { bookId, chapterTitle, content, price } = req.body;
     const authHeader = req.headers.authorization;
 
     // Validate input
@@ -105,7 +107,7 @@ const createChapter = async (req, res) => {
 
         const chapterCount = await Chapter.count({
             where: {
-                bookId: bookId  // Count the chapters that belong to this book
+                book_id: bookId  // Count the chapters that belong to this book
             }
         });
 
@@ -114,10 +116,11 @@ const createChapter = async (req, res) => {
 
         // Create the new chapter
         const newChapter = await Chapter.create({
-            bookId,          // The ID of the book the chapter belongs to
-            chapterId: newChapterId,  // Set the new chapterId
-            chapterTitle,    // The title of the chapter
-            content          // The content of the chapter
+            book_id: bookId,          // The ID of the book the chapter belongs to
+            chapter_id: newChapterId,  // Set the new chapterId
+            chapter_title: chapterTitle,    // The title of the chapter
+            content: content,          // The content of the chapter
+            price: price || 0
         });
 
         res.status(201).json({

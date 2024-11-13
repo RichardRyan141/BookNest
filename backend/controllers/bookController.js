@@ -76,10 +76,10 @@ const addBook = (req, res) => {
         try {
             // Create the new book record without the cover image first
             const newBook = await Book.create({
-                title,
-                description,
-                author_id,
-                publisher,
+                tilte: title,
+                description: description,
+                author_id: author_id,
+                publicher: publisher,
             });
 
             // After creating the book, rename the uploaded cover image with the book's ID
@@ -156,6 +156,11 @@ const editBook = (req, res) => {
             if (req.file) {
                 coverImage = `uploads/book-cover/${existingBook.id}${path.extname(req.file.originalname)}`;
                 const fs = require('fs');
+
+                await fs.promises.unlink(existingBook.coverImage).catch(() => {
+                    console.warn("Old cover image could not be deleted, may not exist.");
+                });
+
                 await fs.promises.rename(req.file.path, coverImage);
 
                 existingBook.coverImage = coverImage;
@@ -185,13 +190,13 @@ const getBookDetails = async (req, res) => {
             include: [
                 {
                     model: User,
-                    as: 'author', // Alias for the author relation
-                    attributes: ['id', 'name'], // Get only the necessary fields
+                    as: 'author',
+                    attributes: ['id', 'name'],
                 },
                 {
                     model: Chapter,
-                    attributes: ['chapter_id', 'chapter_title', 'updatedAt'], // Get chapter details
-                    order: [['chapter_id', 'ASC']], // Order chapters by chapter ID
+                    attributes: ['chapter_id', 'chapter_title', 'updatedAt'],
+                    order: [['chapter_id', 'ASC']],
                 }
             ]
         });
@@ -201,9 +206,21 @@ const getBookDetails = async (req, res) => {
             return res.status(404).json({ message: 'Book not found' });
         }
 
-        const lastChapterUpdate = book.Chapters.reduce((latest, chapter) => {
-            return chapter.updatedAt > latest ? chapter.updatedAt : latest;
-        }, book.updatedAt);
+        const chapterCount = await Chapter.count({
+            where: {
+                book_id: id
+            }
+        });
+
+        let lastChapterUpdate = null;
+        if (chapterCount == 0) {
+            lastChapterUpdate = book.updatedAt;
+        }
+        else {
+            lastChapterUpdate = book.Chapters.reduce((latest, chapter) => {
+                return chapter.updatedAt > latest ? chapter.updatedAt : latest;
+            }, book.updatedAt);
+        }
 
         // Format the book details with chapters
         const bookDetails = {

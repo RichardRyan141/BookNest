@@ -30,18 +30,14 @@ const getChannelList = async (req, res) => {
             return res.status(401).json({ message: 'You are not a part of this community' });
         }
 
-        const channels = await CommunityChannels.findOne({
+        const channels = await CommunityChannels.findAll({
             where: {
-                communityId: communityId,
+                community_id: communityId,
                 visibility: member.role
             }
         });
 
-        if (!channels) {
-            return res.status(404).json({ message: 'No channels found or you have no access to any channels' });
-        }
-
-        res.status(200).json(channels);
+        res.status(200).json(channels.length ? channels : { message: 'No accessible channels found' });
 
     } catch (error) {
         console.error(error);
@@ -76,13 +72,17 @@ const createChannel = async (req, res) => {
             }
         });
 
+        if (!member) {
+            return res.status(401).json({ message: 'You are not a part of this community' });
+        }
+
         if ((member.role != "admin") && (member.role != 'owner')) {
             return res.status(403).json({ message: 'Only owner and admin can create channels' });
         }
 
         const newChannel = await CommunityChannels.create({
             name: name,
-            communityId: communityId,
+            community_id: communityId,
             visibility: visibility,
         });
 
@@ -123,6 +123,10 @@ const deleteChannel = async (req, res) => {
             }
         });
 
+        if (!member) {
+            return res.status(401).json({ message: 'You are not a part of this community' });
+        }
+
         if ((member.role != "admin") && (member.role != 'owner')) {
             return res.status(403).json({ message: 'Only owner and admin can delete channels' });
         }
@@ -134,7 +138,7 @@ const deleteChannel = async (req, res) => {
             }
         });
 
-        res.status(201).json({
+        res.status(200).json({
             message: 'Channel deleted successfully',
         });
     } catch (error) {
