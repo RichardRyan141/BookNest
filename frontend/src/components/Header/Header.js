@@ -235,7 +235,7 @@ const Header = () => {
                       }`
                     }
                   >
-                    Books
+                    Explore
                   </NavLink>
                 </li>
                 <li>

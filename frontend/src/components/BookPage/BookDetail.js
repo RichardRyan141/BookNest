@@ -5,47 +5,47 @@ import { useParams } from "react-router-dom";
 const books = [
   {
     id: 1,
-    title: "The Great Gatsby",
+    title: "Atomic Habits",
     author: "F. Scott Fitzgerald",
     synopsis:
       "A story of the young and mysterious millionaire Jay Gatsby and his passion for the beautiful Daisy Buchanan, set in the Jazz Age on Long Island.",
     genres: ["#Classic", "#Romance"],
     rating: 4,
     chapters: 9,
-    imageUrl: "https://picsum.photos/150/220?random=1",
+    imageUrl: "/book-cover/aotmichabits.jpg",
   },
   {
     id: 2,
-    title: "To Kill a Mockingbird",
+    title: "The Sorcerer's Stone",
     author: "Harper Lee",
     synopsis:
       "A gripping, heart-wrenching, and wholly remarkable tale of coming-of-age in a South poisoned by virulent prejudice.",
     genres: ["#Historical", "#Drama"],
     rating: 5,
     chapters: 31,
-    imageUrl: "https://picsum.photos/150/220?random=2",
+    imageUrl: "/book-cover/harrypotter.jpg",
   },
   {
     id: 3,
-    title: "1984",
-    author: "George Orwell",
+    title: "Ego is The Enemy",
+    author: "Ryan Renold",
     synopsis:
       "A dystopian novel set in a totalitarian society ruled by Big Brother, exploring themes of oppression, surveillance, and freedom.",
     genres: ["#Dystopian", "#SciFi"],
     rating: 4,
     chapters: 24,
-    imageUrl: "https://picsum.photos/150/220?random=3",
+    imageUrl: "/book-cover/egoistheemey.jpg",
   },
   {
     id: 4,
-    title: "Pride and Prejudice",
+    title: "Subtle Art",
     author: "Jane Austen",
     synopsis:
       "A romantic novel that critiques the British landed gentry at the end of the 18th century, following the story of Elizabeth Bennet.",
     genres: ["#Romance", "#Classic"],
     rating: 5,
     chapters: 61,
-    imageUrl: "https://picsum.photos/150/220?random=4",
+    imageUrl: "/book-cover/subtleart.jpg",
   },
   {
     id: 5,

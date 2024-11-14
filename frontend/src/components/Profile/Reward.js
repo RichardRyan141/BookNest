@@ -70,7 +70,7 @@ const Reward = () => {
         <h2 className="text-xl font-bold mb-6 ">🎉 Rewards Dashboard</h2>
 
         {/* Daily Reward */}
-        <div className="bg-blue-100 text-blue-800 p-4 rounded-lg mb-6 text-center">
+        <div className="mb-6 bg-white border border-gray-200 rounded-lg shadow p-3 text-center">
           <p className="text-xl font-semibold">
             Daily Reward:{" "}
             <span className="font-bold">{rewardData.dailyReward}</span>

@@ -26,8 +26,8 @@ const members = [
     role: "Moderator",
     profilePic: "https://randomuser.me/api/portraits/men/23.jpg",
     joinedDate: "July 2020",
-    status: "Busy",
-    chatEmote: "📞",
+    status: "Offline",
+    chatEmote: "💬",
   },
   {
     id: 4,
@@ -57,7 +57,7 @@ const CommMember = () => {
       </h2>
       <table className="min-w-full table-auto bg-gray-200 p-3 rounded-lg overflow-hidden ">
         <thead>
-          <tr className="border-b-2 border-gray-300 text-left">
+          <tr className="border-b-2 border-gray-300 text-center">
             <th className="px-4 py-2">Profile</th>
             <th className="px-4 py-2">Name</th>
             <th className="px-4 py-2">Role</th>
@@ -70,16 +70,18 @@ const CommMember = () => {
           {members.map((member) => (
             <tr
               key={member.id}
-              className={`border-b border-gray-200 rounded-lg bg-white hover:bg-gray-50 
+              className={`border-b border-gray-200 rounded-lg bg-white hover:bg-gray-50 text-center
           
         `}
             >
-              <td className="px-4 py-2">
-                <img
-                  src={member.profilePic}
-                  alt={member.name}
-                  className="w-12 h-12 rounded-full border-2 border-gray-300"
-                />
+              <td className="px-4 py-2  justify-center items-center">
+                <div className="w-full h-full flex justify-center items-center">
+                  <img
+                    src={member.profilePic}
+                    alt={member.name}
+                    className="w-12 h-12 rounded-full border-2 border-gray-300"
+                  />
+                </div>
               </td>
               <td className="px-4 py-2">{member.name}</td>
               <td className="px-4 py-2 font-semibold">
@@ -94,7 +96,12 @@ const CommMember = () => {
                 )}
               </td>
               <td className="px-4 py-2">{member.joinedDate}</td>
-              <td className="px-4 py-2">{member.status}</td>
+              <td className="px-4 py-2 flex gap-1 items-center justify-center">
+                <p className="text-xs">
+                  {member.status === "Online" ? <>🟢</> : <>🔴</>}
+                </p>
+                <p>{member.status}</p>
+              </td>
               <td className="px-4 py-2 text-lg">{member.chatEmote}</td>
             </tr>
           ))}

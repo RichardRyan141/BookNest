@@ -19,26 +19,22 @@ const Credit = () => {
     {
       id: 1,
       name: "PayPal",
-      logoUrl:
-        "https://www.paypalobjects.com/webstatic/mktg/Logo/pp_com_digital_express_mark.svg",
+      logoUrl: "/payment/paypal.png",
     },
     {
       id: 2,
       name: "Gopay",
-      logoUrl:
-        "https://upload.wikimedia.org/wikipedia/commons/e/e6/GoPay_Logo_2021.png",
+      logoUrl: "/payment/gopay.jpg",
     },
     {
       id: 3,
       name: "ShoppePay",
-      logoUrl:
-        "https://upload.wikimedia.org/wikipedia/commons/a/a1/ShopPay_Logo.png",
+      logoUrl: "/payment/shopee.jpg",
     },
     {
       id: 4,
       name: "Debit Card",
-      logoUrl:
-        "https://upload.wikimedia.org/wikipedia/commons/2/25/MasterCard-logo.svg",
+      logoUrl: "/payment/visa.png",
     },
   ];
 
@@ -73,7 +69,7 @@ const Credit = () => {
               <img
                 src={option.logoUrl}
                 alt={option.name}
-                className="w-16 h-16 mb-2"
+                className="w-24 h-16 mb-2"
               />
               <span className="text-sm font-medium text-gray-700">
                 {option.name}
