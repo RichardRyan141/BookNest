@@ -14,6 +14,7 @@ const Header = () => {
   const { isAuthenticated, setIsAuthenticated } = useAuth();
   const navigate = useNavigate();
   const [showLogin, setShowLogin] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
   const [showRegister, setShowRegister] = useState(false);
   // const [isAuthenticated, setIsAuthenticated] = useState(false); // State to track authentication
 
@@ -134,20 +135,46 @@ const Header = () => {
                     <span className="text-blue-700 ">Inbox</span>{" "}
                     {/* Inbox label */}
                   </Link>
-                  <Link to="/profile">
-                    <img
-                      className="w-10 h-10 rounded"
-                      src="/boy.png"
-                      alt="Default avatar"
-                    />
-                  </Link>
-                  <a
-                    href="#"
-                    className="text-gray-800 dark:text-white hover:bg-gray-50 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 mr-2 dark:hover:bg-gray-700 focus:outline-none dark:focus:ring-gray-800"
-                    onClick={logout}
-                  >
-                    Log Out
-                  </a>
+                  <div className="relative inline-block text-left">
+                    <button
+                      onClick={() => setIsOpen((prev) => !prev)} // Correctly toggles the isOpen state
+                      className="focus:outline-none"
+                    >
+                      <img
+                        className="w-10 h-10 rounded-full cursor-pointer"
+                        src="/boy.png"
+                        alt="Profile avatar"
+                      />
+                    </button>
+
+                    {isOpen && (
+                      <div className="absolute right-[-5] mt-2 w-32 bg-white border border-gray-200 rounded-lg shadow-lg z-20">
+                        <Link
+                          to="/profile"
+                          className="block px-4 py-2 text-gray-700 hover:bg-gray-100 hover:text-gray-900"
+                          onClick={() => setIsOpen((prev) => !prev)} // Corrected to toggle isOpen when a link is clicked
+                        >
+                          Profile
+                        </Link>
+                        <Link
+                          to="/membership"
+                          className="block px-4 py-2 text-gray-700 hover:bg-gray-100 hover:text-gray-900"
+                          onClick={() => setIsOpen((prev) => !prev)} // Corrected to toggle isOpen when a link is clicked
+                        >
+                          Membership
+                        </Link>
+                        <button
+                          onClick={() => {
+                            logout(); // Correctly calls the logout function
+                            setIsOpen((prev) => !prev); // Closes the dropdown after logout
+                          }}
+                          className="w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100 hover:text-gray-900"
+                        >
+                          Sign Out
+                        </button>
+                      </div>
+                    )}
+                  </div>
                 </>
               ) : (
                 <>

@@ -18,6 +18,7 @@ import { AuthProvider } from "./components/AuthContext/AuthContext";
 import BookList from "./components/BookPage/BookList";
 import BookDetail from "./components/BookPage/BookDetail";
 import CreateBook from "./components/BookPage/CreateBook";
+import Membership from "./components/Membership/Membership";
 
 const router = createBrowserRouter([
   {
@@ -106,6 +107,14 @@ const router = createBrowserRouter([
     element: (
       <Layout>
         <CreateBook />
+      </Layout>
+    ),
+  },
+  {
+    path: "/membership",
+    element: (
+      <Layout>
+        <Membership />
       </Layout>
     ),
   },

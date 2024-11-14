@@ -84,25 +84,44 @@ const Credit = () => {
         <h2 className="text-2xl font-semibold text-gray-800 mb-4">
           Purchase History
         </h2>
-        <div className="space-y-4">
-          {purchaseHistory.map((purchase) => (
-            <div
-              key={purchase.id}
-              className="flex justify-between items-center p-4 bg-gray-200 rounded-lg shadow-sm"
-            >
-              <div className="text-lg font-medium text-gray-800">
-                {purchase.description}
-              </div>
-              <div className="text-sm text-gray-600">{purchase.date}</div>
-              <div
-                className={`text-lg font-semibold ${
-                  purchase.amount < 0 ? "text-red-600" : "text-green-600"
-                }`}
-              >
-                ${purchase.amount.toFixed(2)}
-              </div>
-            </div>
-          ))}
+        <div className="space-y-4 bg-white border border-gray-200 rounded-lg shadow p-3">
+          <table className="min-w-full bg-white rounded-lg shadow-sm">
+            <thead>
+              <tr className="border-b border-gray-200">
+                <th className="px-4 py-2 text-left text-gray-800 font-medium">
+                  Description
+                </th>
+                <th className="px-4 py-2 text-left text-gray-800 font-medium">
+                  Date
+                </th>
+                <th className="px-4 py-2 text-left text-gray-800 font-medium">
+                  Amount
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {purchaseHistory.map((purchase) => (
+                <tr
+                  key={purchase.id}
+                  className="border-b border-gray-100 hover:bg-gray-50 transition duration-150"
+                >
+                  <td className="px-4 py-3 text-gray-800 text-lg">
+                    {purchase.description}
+                  </td>
+                  <td className="px-4 py-3 text-gray-600 text-sm">
+                    {purchase.date}
+                  </td>
+                  <td
+                    className={`px-4 py-3 text-lg font-semibold ${
+                      purchase.amount < 0 ? "text-red-600" : "text-green-600"
+                    }`}
+                  >
+                    ${purchase.amount.toFixed(2)}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
       </div>
     </div>
