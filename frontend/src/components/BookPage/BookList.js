@@ -180,7 +180,7 @@ const BookList = () => {
       <div className="w-full flex justify-end">
         <Link to="/book/create">
           <button className="px-6 py-3 bg-gradient-to-r from-blue-500 to-purple-600 text-white font-semibold rounded-lg shadow-md hover:from-blue-600 hover:to-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-opacity-50 transition duration-300 ease-in-out transform hover:scale-105">
-            Create Your Own Book
+            Write Your Own Book
           </button>
         </Link>
       </div>

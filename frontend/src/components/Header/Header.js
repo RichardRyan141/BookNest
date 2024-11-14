@@ -116,7 +116,7 @@ const Header = () => {
             <div className="flex items-center lg:order-2">
               {isAuthenticated ? (
                 <>
-                  <div className="text-xl font-semibold text-white bg-gradient-to-r from-blue-500 to-green-500 rounded-full py-2 px-6 shadow-lg mr-3">
+                  <div className="text-base font-semibold text-white bg-gradient-to-r from-blue-500 to-green-500 rounded-full py-2 px-4 shadow-lg mr-3">
                     ${(150.75).toFixed(2)}
                   </div>
 
