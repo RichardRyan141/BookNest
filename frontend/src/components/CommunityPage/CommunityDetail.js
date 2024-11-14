@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import CommMember from "./CommunityMember";
 import CommChannel from "./CommunityChannel";
@@ -101,6 +101,10 @@ const CommunityDetail = () => {
   const { id } = useParams(); // Get community ID from the URL params
   const community = mockCommunities.find((c) => c.id === parseInt(id));
   const [selectedPage, setSelectedPage] = useState("detail");
+
+  useEffect(() => {
+    window.scrollTo(0, 0); // Scroll to top
+  }, []);
 
   if (!community) return <p>Community not found!</p>;
 

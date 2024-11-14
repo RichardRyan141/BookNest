@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import Swal from "sweetalert2";
 
 // Dummy data for books
 const books = [
@@ -174,6 +175,20 @@ const BookDetail = () => {
   const { id } = useParams(); // Get community ID from the URL params
   const book = books.find((c) => c.id === parseInt(id));
 
+  useEffect(() => {
+    window.scrollTo(0, 0); // Scroll to top
+  }, []);
+
+  const addBookCollection = () => {
+    Swal.fire({
+      icon: "success",
+      title: "Successful",
+      text: "Book added to Collection",
+      timer: 1300,
+      showConfirmButton: false,
+    });
+  };
+
   if (!book) return <p>Book not found!</p>;
   return (
     <div className="container mx-auto p-6 max-w-4xl bg-white shadow-lg rounded-lg">
@@ -230,7 +245,10 @@ const BookDetail = () => {
             </div>
 
             {/* View button */}
-            <button className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition duration-200">
+            <button
+              className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition duration-200"
+              onClick={addBookCollection}
+            >
               Add to collection
             </button>
           </div>

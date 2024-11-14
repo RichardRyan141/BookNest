@@ -15,7 +15,7 @@ const Membership = () => {
           ></div>
         </div>
         <div className="mx-auto max-w-4xl text-center">
-          <h2 className="text-base/7 font-semibold text-indigo-600">
+          <h2 className="text-base/7 font-semibold text-blue-600">
             Subscription Plans
           </h2>
           <p className="mt-2 text-balance text-3xl font-semibold tracking-tight text-gray-900 sm:text-6xl mb-3">
@@ -28,21 +28,17 @@ const Membership = () => {
         </p>
         <div class="mx-auto mt-16 grid max-w-lg grid-cols-1 items-center gap-y-6 sm:mt-20 sm:gap-y-0 lg:max-w-4xl lg:grid-cols-2">
           <div class="rounded-3xl rounded-t-3xl bg-white/60 p-8 ring-1 ring-gray-900/10 sm:mx-8 sm:rounded-b-none sm:p-10 lg:mx-0 lg:rounded-bl-3xl lg:rounded-tr-none">
-            <h3
-              id="tier-hobby"
-              class="text-base/7 font-semibold text-indigo-600"
-            >
-              Hobby
+            <h3 id="tier-hobby" class="text-base/7 font-semibold text-blue-600">
+              Basic
             </h3>
             <p class="mt-4 flex items-baseline gap-x-2">
               <span class="text-5xl font-semibold tracking-tight text-gray-900">
-                $29
+                $19
               </span>
               <span class="text-base text-gray-500">/month</span>
             </p>
             <p class="mt-6 text-base/7 text-gray-600">
-              The perfect plan if you&#039;re just getting started with our
-              product.
+              The perfect plan if you&#039;re just getting started with our app.
             </p>
             <ul
               role="list"
@@ -50,7 +46,7 @@ const Membership = () => {
             >
               <li class="flex gap-x-3">
                 <svg
-                  class="h-6 w-5 flex-none text-indigo-600"
+                  class="h-6 w-5 flex-none text-blue-600"
                   viewBox="0 0 20 20"
                   fill="currentColor"
                   aria-hidden="true"
@@ -62,11 +58,11 @@ const Membership = () => {
                     clip-rule="evenodd"
                   />
                 </svg>
-                25 products
+                Up to 1,000 chapters
               </li>
               <li class="flex gap-x-3">
                 <svg
-                  class="h-6 w-5 flex-none text-indigo-600"
+                  class="h-6 w-5 flex-none text-blue-600"
                   viewBox="0 0 20 20"
                   fill="currentColor"
                   aria-hidden="true"
@@ -78,11 +74,11 @@ const Membership = () => {
                     clip-rule="evenodd"
                   />
                 </svg>
-                Up to 10,000 subscribers
+                Personal Bookshelf
               </li>
               <li class="flex gap-x-3">
                 <svg
-                  class="h-6 w-5 flex-none text-indigo-600"
+                  class="h-6 w-5 flex-none text-blue-600"
                   viewBox="0 0 20 20"
                   fill="currentColor"
                   aria-hidden="true"
@@ -94,11 +90,11 @@ const Membership = () => {
                     clip-rule="evenodd"
                   />
                 </svg>
-                Advanced analytics
+                Basic analytics
               </li>
               <li class="flex gap-x-3">
                 <svg
-                  class="h-6 w-5 flex-none text-indigo-600"
+                  class="h-6 w-5 flex-none text-blue-600"
                   viewBox="0 0 20 20"
                   fill="currentColor"
                   aria-hidden="true"
@@ -110,13 +106,13 @@ const Membership = () => {
                     clip-rule="evenodd"
                   />
                 </svg>
-                24-hour support response time
+                Book Recommendations
               </li>
             </ul>
             <a
               href="#"
               aria-describedby="tier-hobby"
-              class="mt-8 block rounded-md px-3.5 py-2.5 text-center text-sm font-semibold text-indigo-600 ring-1 ring-inset ring-indigo-200 hover:ring-indigo-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 sm:mt-10"
+              class="mt-8 block rounded-md px-3.5 py-2.5 text-center text-sm font-semibold text-blue-600 ring-1 ring-inset ring-blue-200 hover:ring-blue-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 sm:mt-10"
             >
               Get started today
             </a>
@@ -124,18 +120,18 @@ const Membership = () => {
           <div class="relative rounded-3xl bg-gray-900 p-8 shadow-2xl ring-1 ring-gray-900/10 sm:p-10">
             <h3
               id="tier-enterprise"
-              class="text-base/7 font-semibold text-indigo-400"
+              class="text-base/7 font-semibold text-blue-400"
             >
-              Enterprise
+              Pro
             </h3>
             <p class="mt-4 flex items-baseline gap-x-2">
               <span class="text-5xl font-semibold tracking-tight text-white">
-                $99
+                $59
               </span>
               <span class="text-base text-gray-400">/month</span>
             </p>
             <p class="mt-6 text-base/7 text-gray-300">
-              Dedicated support and infrastructure for your company.
+              Dedicated support and infrastructure for your activity.
             </p>
             <ul
               role="list"
@@ -143,7 +139,7 @@ const Membership = () => {
             >
               <li class="flex gap-x-3">
                 <svg
-                  class="h-6 w-5 flex-none text-indigo-400"
+                  class="h-6 w-5 flex-none text-blue-400"
                   viewBox="0 0 20 20"
                   fill="currentColor"
                   aria-hidden="true"
@@ -155,11 +151,11 @@ const Membership = () => {
                     clip-rule="evenodd"
                   />
                 </svg>
-                Unlimited products
+                Unlimited Book Access
               </li>
               <li class="flex gap-x-3">
                 <svg
-                  class="h-6 w-5 flex-none text-indigo-400"
+                  class="h-6 w-5 flex-none text-blue-400"
                   viewBox="0 0 20 20"
                   fill="currentColor"
                   aria-hidden="true"
@@ -171,11 +167,11 @@ const Membership = () => {
                     clip-rule="evenodd"
                   />
                 </svg>
-                Unlimited subscribers
+                Custom Bookshelf
               </li>
               <li class="flex gap-x-3">
                 <svg
-                  class="h-6 w-5 flex-none text-indigo-400"
+                  class="h-6 w-5 flex-none text-blue-400"
                   viewBox="0 0 20 20"
                   fill="currentColor"
                   aria-hidden="true"
@@ -191,7 +187,7 @@ const Membership = () => {
               </li>
               <li class="flex gap-x-3">
                 <svg
-                  class="h-6 w-5 flex-none text-indigo-400"
+                  class="h-6 w-5 flex-none text-blue-400"
                   viewBox="0 0 20 20"
                   fill="currentColor"
                   aria-hidden="true"
@@ -207,7 +203,7 @@ const Membership = () => {
               </li>
               <li class="flex gap-x-3">
                 <svg
-                  class="h-6 w-5 flex-none text-indigo-400"
+                  class="h-6 w-5 flex-none text-blue-400"
                   viewBox="0 0 20 20"
                   fill="currentColor"
                   aria-hidden="true"
@@ -223,7 +219,7 @@ const Membership = () => {
               </li>
               <li class="flex gap-x-3">
                 <svg
-                  class="h-6 w-5 flex-none text-indigo-400"
+                  class="h-6 w-5 flex-none text-blue-400"
                   viewBox="0 0 20 20"
                   fill="currentColor"
                   aria-hidden="true"
@@ -235,13 +231,13 @@ const Membership = () => {
                     clip-rule="evenodd"
                   />
                 </svg>
-                Custom integrations
+                Book Writing & Publishing Tools
               </li>
             </ul>
             <a
               href="#"
               aria-describedby="tier-enterprise"
-              class="mt-8 block rounded-md bg-indigo-500 px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500 sm:mt-10"
+              class="mt-8 block rounded-md bg-blue-500 px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-sm hover:bg-blue-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500 sm:mt-10"
             >
               Get started today
             </a>

@@ -1,5 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 
+let num = 0;
+
 const CommChannel = () => {
   const server = [
     { id: 1, emoji: "#️⃣", name: "Books" },
@@ -49,8 +51,42 @@ const CommChannel = () => {
           date: new Date().toLocaleString(),
         },
       ]);
+      num += 1;
+
       setNewMessage("");
+
+      if (num === 2) {
+        sendAutoMessages();
+      }
     }
+  };
+
+  const sendAutoMessages = () => {
+    setTimeout(() => {
+      setMessages((prevMessages) => [
+        ...prevMessages,
+        {
+          id: prevMessages.length + 1,
+          sender: "John",
+          profilePic: "https://randomuser.me/api/portraits/men/1.jpg",
+          text: "All good here, how about you?",
+          date: new Date().toLocaleString(),
+        },
+      ]);
+    }, 2000);
+
+    setTimeout(() => {
+      setMessages((prevMessages) => [
+        ...prevMessages,
+        {
+          id: prevMessages.length + 1,
+          sender: "Steph",
+          profilePic: "https://randomuser.me/api/portraits/men/4.jpg",
+          text: "Very well mate, thanks for asking!",
+          date: new Date().toLocaleString(),
+        },
+      ]);
+    }, 3000);
   };
 
   const handleKeyDown = (e) => {
