@@ -4,6 +4,10 @@ import { MdKeyboardArrowRight } from "react-icons/md";
 import { MdKeyboardArrowLeft } from "react-icons/md";
 import { FaStepForward } from "react-icons/fa";
 import { FaStepBackward } from "react-icons/fa";
+import { Link } from "react-router-dom";
+import { MdOutlineBookmarkAdd } from "react-icons/md";
+import Swal from "sweetalert2";
+import { CiSearch } from "react-icons/ci";
 
 const genresList = [
   "Fantasy",
@@ -43,6 +47,7 @@ const Bookshelf = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [sortOption, setSortOption] = useState("Popular");
   const [filteredBooks, setFilteredBooks] = useState(dummyBooks);
+  const [searchQuery, setSearchQuery] = useState("");
   const booksPerPage = 20;
 
   const sortedBooks = [...filteredBooks].sort((a, b) => {
@@ -56,9 +61,13 @@ const Bookshelf = () => {
     return 0;
   });
 
+  const filteredBooks2 = sortedBooks.filter((book) =>
+    book.title.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
   const indexOfLastBook = currentPage * booksPerPage;
   const indexOfFirstBook = indexOfLastBook - booksPerPage;
-  const currentBooks = sortedBooks.slice(indexOfFirstBook, indexOfLastBook);
+  const currentBooks = filteredBooks2.slice(indexOfFirstBook, indexOfLastBook);
 
   const totalPages = Math.ceil(dummyBooks.length / booksPerPage);
 
@@ -92,9 +101,36 @@ const Bookshelf = () => {
     }
   };
 
+  const handleBookmarkClick = () => {
+    Swal.fire({
+      icon: "success",
+      title: "Success",
+      text: "Successfuly add book to list!",
+      timer: 1000,
+      showConfirmButton: false,
+    });
+  };
+
+  const handleSearch = (event) => {
+    setSearchQuery(event.target.value);
+    // Add logic to filter books based on searchQuery
+  };
+
   return (
     <div className="p-6 max-w-4xl mx-auto">
-      <h1 className="text-xl font-bold mb-4">Book List</h1>
+      <div className="w-full flex justify-center">
+        <div className="flex items-center border justify-center w-2/3 bg-white rounded-lg shadow-md p-2">
+          <input
+            type="text"
+            placeholder="Search books..."
+            value={searchQuery}
+            onChange={handleSearch}
+            className="flex-grow p-2 outline-none"
+          />
+          <CiSearch className="text-gray-500 size-7 font-semibold cursor-pointer" />
+        </div>
+      </div>
+
       <div className="mt-4 flex flex-col justify-start mb-4">
         <label className="mr-2 text-lg">Genre</label>
         <select
@@ -182,24 +218,39 @@ const Bookshelf = () => {
 
       <div className="grid grid-cols-5 gap-4">
         {currentBooks.map((book) => (
-          <div
-            key={book.id}
-            className="p-2 border rounded shadow-md hover:shadow-lg"
-          >
-            <div className="h-40 bg-gray-200 flex items-center justify-center text-gray-500">
-              <p>Cover {book.id}</p>
-            </div>
-            <p className="text-sm text-gray-600 m-0">{book.author}</p>
-            <p className="text-base font-semibold m-0 truncate">{book.title}</p>
-            <p className="whitespace-nowrap truncate">
-              Genres: {book.genres.join(", ")}
-            </p>
+          <Link to={`/book/${book.id}`}>
+            <div
+              key={book.id}
+              className="p-2 border rounded shadow-md hover:shadow-lg cursor-pointer"
+            >
+              <div className="h-40 bg-gray-200 flex items-center justify-center text-gray-500">
+                <p>Cover {book.id}</p>
+              </div>
+              <p className="text-sm text-gray-600 m-0">{book.author}</p>
+              <p className="text-base font-semibold m-0 truncate">
+                {book.title}
+              </p>
+              <p className="whitespace-nowrap truncate">
+                Genres: {book.genres.join(", ")}
+              </p>
 
-            <div className="flex items-center mt-2">
-              <CiStar className="text-black mr-1" />
-              <span>{book.rating}</span>
+              <div className="flex justify-between items-center">
+                <div className="flex items-center">
+                  <CiStar className="text-black mr-1" />
+                  <span>{book.rating}</span>
+                </div>
+
+                <MdOutlineBookmarkAdd
+                  className="size-7 hover:bg-gray-300 p-1 rounded-full cursor-pointer"
+                  onClick={(event) => {
+                    event.preventDefault();
+                    event.stopPropagation(); // Prevent the click from propagating to the <Link>
+                    handleBookmarkClick(book.id); // Your specific function
+                  }}
+                />
+              </div>
             </div>
-          </div>
+          </Link>
         ))}
       </div>
     </div>

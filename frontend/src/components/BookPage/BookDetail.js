@@ -173,7 +173,7 @@ const books = [
 
 const BookDetail = () => {
   const { id } = useParams(); // Get community ID from the URL params
-  const book = books.find((c) => c.id === parseInt(id));
+  const book = books.find((c) => c.id === parseInt(1));
 
   useEffect(() => {
     window.scrollTo(0, 0); // Scroll to top
