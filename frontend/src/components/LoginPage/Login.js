@@ -20,21 +20,21 @@ const LoginPage = () => {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    const response = await fetch("http://localhost:5000/users/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(formData),
-    });
-    const data = await response.json();
-    if (data.token) {
-      console.log("Login successful:", data);
-      localStorage.setItem("token", data.token); // Save the token to localStorage
-    } else {
-      console.log("Login failed:", data.message);
-    }
+    // e.preventDefault();
+    // const response = await fetch("http://localhost:5000/users/login", {
+    //   method: "POST",
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   },
+    //   body: JSON.stringify(formData),
+    // });
+    // const data = await response.json();
+    // if (data.token) {
+    //   console.log("Login successful:", data);
+    //   localStorage.setItem("token", data.token); // Save the token to localStorage
+    // } else {
+    //   console.log("Login failed:", data.message);
+    // }
 
     setIsAuthenticated(true);
     navigate("/");

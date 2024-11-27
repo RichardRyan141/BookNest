@@ -9,6 +9,8 @@ import { NavLink } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { useAuth } from "../AuthContext/AuthContext";
+import { CgProfile } from "react-icons/cg";
+import { FaRegBell } from "react-icons/fa6";
 
 const Header = () => {
   const { isAuthenticated, setIsAuthenticated } = useAuth();
@@ -102,17 +104,14 @@ const Header = () => {
       </div> */}
 
       <header>
-        <nav className="bg-white border-gray-200 px-4 lg:px-6 py-2.5 dark:bg-gray-800 ">
+        <nav className="bg-[#111828] border-gray-200 px-4 lg:px-6 py-5">
           <div className="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl">
             <a href="/" className="flex items-center">
               <img
-                src="/logo512.png"
-                className="mr-3 h-6 sm:h-9"
+                src="/BookNest.png"
+                className="mr-3 h-5 sm:h-5"
                 alt="Flowbite Logo"
               />
-              <span className="self-center text-xl font-semibold whitespace-nowrap dark:text-white">
-                BookNest
-              </span>
             </a>
             <div className="flex items-center lg:order-2">
               {isAuthenticated ? (
@@ -123,28 +122,16 @@ const Header = () => {
 
                   <Link
                     to="/inbox"
-                    className="flex items-center px-3 py-2 border border-blue-200 rounded-full outline-none hover:bg-blue-50 focus:ring-2 focus:ring-blue-300 transition duration-200 ease-in-out mr-3"
+                    className="flex items-center px-3 py-2  hover: transition duration-200 ease-in-out mr-3"
                   >
-                    <span
-                      className="text-2xl mr-2"
-                      role="img"
-                      aria-label="Inbox Icon"
-                    >
-                      📬
-                    </span>
-                    <span className="text-blue-700 ">Inbox</span>{" "}
-                    {/* Inbox label */}
+                    <FaRegBell className="text-white size-7" />
                   </Link>
                   <div className="relative inline-block text-left">
                     <button
                       onClick={() => setIsOpen((prev) => !prev)} // Correctly toggles the isOpen state
                       className="focus:outline-none"
                     >
-                      <img
-                        className="w-10 h-10 rounded-full cursor-pointer"
-                        src="/boy.png"
-                        alt="Profile avatar"
-                      />
+                      <CgProfile className="text-white size-10" />
                     </button>
 
                     {isOpen && (
@@ -181,7 +168,7 @@ const Header = () => {
                   <Link to="/login">
                     <a
                       href="#"
-                      className="text-gray-800 dark:text-white hover:bg-gray-50 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 mr-2 dark:hover:bg-gray-700 focus:outline-none dark:focus:ring-gray-800"
+                      className="text-white dark:text-white hover:bg-[#111828] focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 mr-2 dark:hover:bg-gray-700 focus:outline-none dark:focus:ring-gray-800"
                     >
                       Log in
                     </a>
@@ -189,7 +176,7 @@ const Header = () => {
                   <Link to="/register">
                     <a
                       href="/"
-                      className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 mr-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
+                      className=" text-[#111828] bg-[#F6F1D1] hover:bg-[#f6eebb] focus:ring-4  font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 mr-2  focus:outline-none "
                     >
                       Register
                     </a>
@@ -242,8 +229,8 @@ const Header = () => {
                     className={({ isActive }) =>
                       `block py-2 pr-4 pl-3 rounded lg:bg-transparent lg:p-0 ${
                         isActive
-                          ? "text-white bg-blue-700 lg:text-blue-700"
-                          : "text-gray-700 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-blue-700 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-700 lg:dark:hover:bg-transparent dark:border-gray-700"
+                          ? "font-semibold text-white"
+                          : "text-white font-normal hover:font-semibold lg:hover:bg-transparent lg:border-0 dark:hover:text-white dark:hover:bg-gray-700 lg:dark:hover:bg-transparent dark:border-gray-700"
                       }`
                     }
                     aria-current="page"
@@ -257,8 +244,8 @@ const Header = () => {
                     className={({ isActive }) =>
                       `block py-2 pr-4 pl-3 rounded lg:bg-transparent lg:p-0 ${
                         isActive
-                          ? "text-white bg-blue-700 lg:text-blue-700"
-                          : "text-gray-700 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-blue-700 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-700 lg:dark:hover:bg-transparent dark:border-gray-700"
+                          ? "font-semibold text-white"
+                          : "text-white font-normal hover:font-semibold lg:hover:bg-transparent lg:border-0 dark:hover:text-white dark:hover:bg-gray-700 lg:dark:hover:bg-transparent dark:border-gray-700"
                       }`
                     }
                   >
@@ -271,8 +258,8 @@ const Header = () => {
                     className={({ isActive }) =>
                       `block py-2 pr-4 pl-3 rounded lg:bg-transparent lg:p-0 ${
                         isActive
-                          ? "text-white bg-blue-700 lg:text-blue-700"
-                          : "text-gray-700 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-blue-700 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-700 lg:dark:hover:bg-transparent dark:border-gray-700"
+                          ? "font-semibold text-white"
+                          : "text-white font-normal hover:font-semibold lg:hover:bg-transparent lg:border-0 dark:hover:text-white dark:hover:bg-gray-700 lg:dark:hover:bg-transparent dark:border-gray-700"
                       }`
                     }
                   >
@@ -285,12 +272,12 @@ const Header = () => {
                     className={({ isActive }) =>
                       `block py-2 pr-4 pl-3 rounded lg:bg-transparent lg:p-0 ${
                         isActive
-                          ? "text-white bg-blue-700 lg:text-blue-700"
-                          : "text-gray-700 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-blue-700 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-700 lg:dark:hover:bg-transparent dark:border-gray-700"
+                          ? "font-semibold text-white"
+                          : "text-white font-normal hover:font-semibold lg:hover:bg-transparent lg:border-0 dark:hover:text-white dark:hover:bg-gray-700 lg:dark:hover:bg-transparent dark:border-gray-700"
                       }`
                     }
                   >
-                    Market
+                    Collection
                   </NavLink>
                 </li>
               </ul>
