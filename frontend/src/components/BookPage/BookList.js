@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { CiStar } from "react-icons/ci";
 import { MdKeyboardArrowRight } from "react-icons/md";
 import { MdKeyboardArrowLeft } from "react-icons/md";
@@ -49,6 +49,42 @@ const Bookshelf = () => {
   const [filteredBooks, setFilteredBooks] = useState(dummyBooks);
   const [searchQuery, setSearchQuery] = useState("");
   const booksPerPage = 20;
+
+  useEffect(() => {
+    const fetchBooks = async () => {
+      try {
+        const response = await fetch("http://localhost:5000/books");
+        if (!response.ok) {
+          throw new Error("Failed to fetch books");
+        }
+        const data = await response.json();
+        console.log(data);
+
+        // Format fetched data and add dummy fields
+        const fetchedBooks = data.map((book, index) => ({
+          id: dummyBooks.length + index + 1,
+          title: book.title,
+          author: "Unknown Author",
+          rating: (Math.random() * 5).toFixed(1),
+          releaseUpdate: new Date(book.createdAt).toISOString().split("T")[0],
+          genres: [genresList[Math.floor(Math.random() * genresList.length)]],
+        }));
+
+        setFilteredBooks((prevBooks) => {
+          const mergedBooks = [...fetchedBooks, ...prevBooks];
+          const uniqueBooks = Array.from(
+            new Map(mergedBooks.map((book) => [book.id, book])).values()
+          );
+
+          return uniqueBooks;
+        });
+      } catch (error) {
+        console.error("Error fetching books:", error);
+      }
+    };
+
+    fetchBooks();
+  }, []);
 
   const sortedBooks = [...filteredBooks].sort((a, b) => {
     if (sortOption === "Popular") {
