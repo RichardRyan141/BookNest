@@ -2,6 +2,9 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import CommMember from "./CommunityMember";
 import CommChannel from "./CommunityChannel";
+import { FaHome } from "react-icons/fa";
+import { MdPeopleAlt } from "react-icons/md";
+import { IoMdChatbubbles } from "react-icons/io";
 
 // Sample data for communities with more details
 
@@ -78,23 +81,6 @@ const mockCommunities = [
     badges: ["History Buff", "Cultural Explorer", "Timeless Wisdom"],
     level: 2,
   },
-  {
-    id: 5,
-    name: "Romance Readers",
-    description: "For those who love a good love story.",
-    image: "https://picsum.photos/200?random=5",
-    members: 1420,
-    tags: ["Romance", "Drama", "Relationships"],
-    leader: "Jessica Brown",
-    topReaders: [
-      { name: "Alice", booksRead: 45, level: "Expert" },
-      { name: "Bob", booksRead: 38, level: "Advanced" },
-      { name: "Charlie", booksRead: 32, level: "Intermediate" },
-    ],
-    mostReadBook: "Pride and Prejudice",
-    badges: ["Romantic", "Love Guru", "Drama Queen"],
-    level: 3,
-  },
 ];
 
 const CommunityDetail = () => {
@@ -117,33 +103,33 @@ const CommunityDetail = () => {
           className={`px-4 py-2  font-semibold rounded-t
             ${
               selectedPage === "detail"
-                ? "bg-blue-600 text-white"
+                ? "bg-[#111828] text-white"
                 : "bg-white hover:bg-gray-500 text-black"
             }`}
         >
-          Details
+          <FaHome className="size-6" />
         </button>
         <button
           onClick={() => setSelectedPage("member")}
           className={`px-4 py-2  font-semibold rounded-t
             ${
               selectedPage === "member"
-                ? "bg-blue-600 text-white"
+                ? "bg-[#111828] text-white"
                 : "bg-white hover:bg-gray-500 text-black"
             }`}
         >
-          Member
+          <MdPeopleAlt className="size-6" />
         </button>
         <button
           onClick={() => setSelectedPage("channel")}
           className={`px-4 py-2  font-semibold rounded-t
             ${
               selectedPage === "channel"
-                ? "bg-blue-600 text-white"
+                ? "bg-[#111828] text-white"
                 : "bg-white hover:bg-gray-500 text-black"
             }`}
         >
-          Channel
+          <IoMdChatbubbles className="size-6" />
         </button>
       </div>
       {selectedPage === "detail" && (
@@ -156,28 +142,30 @@ const CommunityDetail = () => {
               className="w-48 h-48 object-cover rounded-lg shadow-lg"
             />
             <div>
-              <div className="flex justify-between w-full ">
-                <h1 className="text-3xl font-bold text-blue-700 mb-2">
+              <div className="flex justify-between w-full mt-2">
+                <h1 className="text-3xl font-bold text-[#111828]">
                   {community.name}
                 </h1>
               </div>
 
-              <p className="text-lg text-gray-600">{community.description}</p>
-              <div className="mt-2">
-                <p className="text-md font-semibold">
+              <p className="text-lg text-gray-600 m-0">
+                {community.description}
+              </p>
+              <div className="">
+                <p className="text-md text-sm font-semibold m-0 mt-2">
                   Leader: {community.leader}
                 </p>
-                <p className="text-md text-gray-400 text-sm">
+                <p className="text-md text-gray-400 text-sm m-0">
                   Members: {community.members}
                 </p>
               </div>
-              <div className="flex gap-3 items-center ">
+              <div className="flex gap-3 items-center mt-2">
                 <p className="font-sm text-sm">Tags:</p>
                 <div className="flex gap-2">
                   {community.tags.map((tag, index) => (
                     <span
                       key={index}
-                      className="px-3 py-1 bg-blue-100 text-blue-700 text-sm rounded-full"
+                      className="px-3 py-1 bg-[#f4ebb1] text-blue-700 text-sm rounded-full"
                     >
                       {tag}
                     </span>
@@ -186,7 +174,12 @@ const CommunityDetail = () => {
               </div>
             </div>
             <div className="ml-auto p-1">
-              <img src="/book.png" className="h-10" />
+              <button
+                type="button"
+                class="text-white bg-red-700 hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"
+              >
+                Leave
+              </button>
             </div>
           </div>
 
@@ -258,17 +251,17 @@ const CommunityDetail = () => {
 
                 <div className="flex flex-col">
                   {/* Book Title */}
-                  <p className="text-lg font-semibold text-blue-700 mb-1">
+                  <p className="text-lg font-semibold text-[#111828] mb-4">
                     {community.mostReadBook}
                   </p>
 
                   {/* Reader Count */}
-                  <p className="text-md text-gray-500">
+                  <p className="text-md text-gray-500 m-0">
                     312 people reading this
                   </p>
 
                   {/* Read Button */}
-                  <button className="mt-3 px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition duration-200">
+                  <button className="px-4 py-2 bg-[#40798C] hover:bg-[#2c5360] text-white rounded-md transition duration-200">
                     Read Now
                   </button>
                 </div>
@@ -289,7 +282,7 @@ const CommunityDetail = () => {
             {/* Progress bar */}
             <div className="w-1/2 bg-gray-200 rounded-full h-2.5">
               <div
-                className="bg-blue-600 h-2.5 rounded-full"
+                className="bg-[#111828] h-2.5 rounded-full"
                 style={{ width: `${(community.level / 10) * 100}%` }} // Dummy level calculation (max level 10)
               ></div>
             </div>
@@ -308,11 +301,7 @@ const CommunityDetail = () => {
               {community.badges.map((badge, index) => (
                 <span
                   key={index}
-                  className={`px-4 py-2 text-sm rounded-full ${
-                    index % 2 === 0
-                      ? "bg-yellow-100 text-yellow-600"
-                      : "bg-blue-100 text-blue-600"
-                  }`}
+                  className={`px-4 py-2 text-sm rounded-full bg-[#f4ebb1] text-gray-500`}
                 >
                   {badge}
                 </span>
@@ -324,7 +313,7 @@ const CommunityDetail = () => {
           <div className="mt-6">
             <button
               onClick={() => alert(`Joining ${community.name}`)}
-              className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition duration-200"
+              className="bg-[#40798C] hover:bg-[#2c5360] text-white px-4 py-2 rounded-md transition duration-200"
             >
               Community Terms & Condition
             </button>

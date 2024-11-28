@@ -45,11 +45,11 @@ const Credit = () => {
   return (
     <div className="container mx-auto p-8 max-w-3xl bg-white shadow-lg rounded-lg">
       {/* Balance Section */}
-      <div className="mb-8 text-center">
+      <div className="mb-8 flex flex-col justify-center items-center">
         <h1 className="text-3xl font-semibold text-gray-800 mb-4">
           Your Balance
         </h1>
-        <div className="text-6xl font-bold text-green-600">
+        <div className="text-6xl font-bold text-[#f4ebb1] py-3 px-6 rounded-md bg-[#111828] w-fit">
           ${saldo.toFixed(2)}
         </div>
       </div>

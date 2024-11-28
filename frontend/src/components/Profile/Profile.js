@@ -30,7 +30,7 @@ const Profile = () => {
           className={`px-4 py-2  font-semibold rounded-t
             ${
               selectedPage === "profile"
-                ? "bg-blue-600 text-white"
+                ? "bg-[#111828] text-white"
                 : "bg-white hover:bg-gray-500 text-black"
             }`}
         >
@@ -41,7 +41,7 @@ const Profile = () => {
           className={`px-4 py-2  font-semibold rounded-t
             ${
               selectedPage === "rewards"
-                ? "bg-blue-600 text-white"
+                ? "bg-[#111828] text-white"
                 : "bg-white hover:bg-gray-500 text-black"
             }`}
         >
@@ -52,7 +52,7 @@ const Profile = () => {
           className={`px-4 py-2  font-semibold rounded-t
             ${
               selectedPage === "credit"
-                ? "bg-blue-600 text-white"
+                ? "bg-[#111828] text-white"
                 : "bg-white hover:bg-gray-500 text-black"
             }`}
         >
@@ -169,7 +169,7 @@ const Profile = () => {
                 {userData.favoriteGenres.map((genre, index) => (
                   <span
                     key={index}
-                    className="px-3 py-1 bg-blue-100 text-blue-600 text-sm rounded-full"
+                    className="px-3 py-1 bg-[#f4ebb1] text-blue-600 text-sm rounded-full"
                   >
                     {genre}
                   </span>

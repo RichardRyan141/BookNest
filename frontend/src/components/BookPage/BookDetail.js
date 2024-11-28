@@ -13,7 +13,7 @@ const books = [
     genres: ["#Classic", "#Romance"],
     rating: 4,
     chapters: 9,
-    imageUrl: "/book-cover/aotmichabits.jpg",
+    imageUrl: "/book-cover/atomic.jpg",
   },
   {
     id: 2,

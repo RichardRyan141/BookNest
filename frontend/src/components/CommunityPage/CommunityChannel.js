@@ -125,8 +125,12 @@ const CommChannel = () => {
 
           {/* Add Server Button */}
           <div className="bg-gray-200 w-full h-12 flex items-center justify-center rounded-lg hover:bg-gray-400 cursor-pointer transition duration-200 shadow-sm">
-            <span role="img" aria-label="add" className="text-xl text-gray-700">
-              ➕
+            <span
+              role="img"
+              aria-label="add"
+              className="text-3xl text-gray-700 align-middle font-bold"
+            >
+              +
             </span>
           </div>
         </div>
@@ -180,7 +184,7 @@ const CommChannel = () => {
             />
             <button
               onClick={handleSendMessage}
-              className="p-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600"
+              className="p-3 bg-[#40798C] hover:bg-[#2c5360] text-white rounded-lg"
             >
               Send
             </button>

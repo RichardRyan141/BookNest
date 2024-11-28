@@ -221,9 +221,12 @@ const Bookshelf = () => {
           <Link to={`/book/${book.id}`}>
             <div
               key={book.id}
-              className="p-2 border rounded shadow-md hover:shadow-lg cursor-pointer"
+              className="p-2 border rounded shadow-md hover:shadow-lg cursor-pointer bg-white"
             >
-              <div className="h-40 bg-gray-200 flex items-center justify-center text-gray-500">
+              <div
+                className="h-52 bg-gray-200 flex items-center justify-center text-gray-500 bg-cover bg-center"
+                style={{ backgroundImage: `url(/book-cover/atomic.jpg)` }}
+              >
                 <p>Cover {book.id}</p>
               </div>
               <p className="text-sm text-gray-600 m-0">{book.author}</p>

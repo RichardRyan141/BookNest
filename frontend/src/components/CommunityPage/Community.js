@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { CiSearch } from "react-icons/ci";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 
@@ -102,13 +103,12 @@ const Community = () => {
   return (
     <div className="p-6 max-w-4xl mx-auto">
       <div className="flex justify-between">
-        <h1 className="text-3xl font-bold text-center mb-8">Community Page</h1>
         <div className="flex gap-8 justify-center mb-6">
           <button
             onClick={() => setSelectedPage("find")}
             className={`px-4 py-2 font-semibold rounded-lg focus:ring-2 ${
               selectedPage === "find"
-                ? "bg-blue-600 text-white ring-blue-400"
+                ? "bg-[#111828] text-white "
                 : "bg-white text-gray-500 hover:bg-gray-100"
             }`}
           >
@@ -118,7 +118,7 @@ const Community = () => {
             onClick={() => setSelectedPage("yours")}
             className={`px-4 py-2 font-semibold rounded-lg focus:ring-2 ${
               selectedPage === "yours"
-                ? "bg-blue-600 text-white ring-blue-400"
+                ? "bg-[#111828] text-white "
                 : "bg-white text-gray-500 hover:bg-gray-100"
             }`}
           >
@@ -130,83 +130,56 @@ const Community = () => {
       {/* Content Based on Selection */}
       {selectedPage === "find" ? (
         <div>
-          <h2 className="text-2xl font-semibold mb-4">Find Communities</h2>
-
           <form
             className="max-w-md mx-auto mb-5"
             onSubmit={(e) => e.preventDefault()}
           >
-            <label
-              for="default-search"
-              className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white"
-            >
-              Search
-            </label>
-            <div className="relative">
-              <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
-                <svg
-                  className="w-4 h-4 text-gray-500 dark:text-gray-400"
-                  aria-hidden="true"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 20 20"
-                >
-                  <path
-                    stroke="currentColor"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
-                  />
-                </svg>
+            <div className="w-full flex justify-center">
+              <div className="flex items-center border justify-center w-full bg-white rounded-lg shadow-md p-2">
+                <input
+                  type="text"
+                  placeholder="Search Community..."
+                  value={searchTerm}
+                  onChange={handleSearchChange}
+                  className="flex-grow p-2 outline-none"
+                />
+                <CiSearch className="text-gray-500 size-7 font-semibold cursor-pointer" />
               </div>
-              <input
-                type="search"
-                value={searchTerm}
-                onChange={handleSearchChange}
-                id="default-search"
-                className="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                placeholder="Search for community ..."
-                required
-              />
-              <button
-                type="submit"
-                className="text-white absolute end-2.5 bottom-2.5 bg-blue-500 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-              >
-                Search
-              </button>
             </div>
           </form>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-1 gap-6">
             {filteredCommunities.map((community) => (
               <div
                 key={community.id}
-                className="bg-white rounded-lg shadow-lg p-4 hover:shadow-xl transition duration-300"
+                className="bg-white rounded-lg shadow-lg p-4 hover:shadow-xl transition duration-300 flex items-center"
               >
                 <img
                   src={community.image}
                   alt={community.name}
-                  className="w-full h-40 object-cover rounded-md mb-4"
+                  className="w-52 h-auto object-cover rounded-md mr-5"
                 />
-                <h3 className="text-xl font-semibold mb-2">{community.name}</h3>
-                <p className="text-gray-700 mb-4">{community.description}</p>
-                <p className="font-medium text-sm">
-                  Members: {community.members}
-                </p>
-                <div className="flex flex-wrap gap-2 mb-4">
-                  {community.tags.map((tag, index) => (
-                    <span
-                      key={index}
-                      className="px-2 py-1 bg-blue-100 text-blue-700 text-sm rounded-full"
-                    >
-                      {tag}
-                    </span>
-                  ))}
+                <div className="w-full">
+                  <h3 className="text-xl font-semibold">{community.name}</h3>
+                  <p className="text-gray-700">{community.description}</p>
+                  <p className="font-medium text-sm">
+                    Members: {community.members}
+                  </p>
+                  <div className="flex flex-wrap gap-2">
+                    {community.tags.map((tag, index) => (
+                      <span
+                        key={index}
+                        className="px-2 py-1 bg-[#f4ebb1] text-blue-700 text-sm rounded-full"
+                      >
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
                 </div>
+
                 <button
                   onClick={() => joinCommunity(community)}
-                  className="w-full bg-green-500 text-white py-2 px-4 rounded-lg hover:bg-green-600"
+                  className="w-72 bg-[#40798C] text-white py-2 px-4 rounded-lg hover:bg-[#2c5360] h-fit"
                 >
                   Join
                 </button>
@@ -217,49 +190,41 @@ const Community = () => {
       ) : (
         <div>
           <h2 className="text-2xl font-semibold mb-4">Your Communities</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-1 gap-6">
             {yourCommunities.length > 0 ? (
               yourCommunities.map((community) => (
                 <div
                   key={community.id}
-                  className="bg-white rounded-lg shadow-lg p-6 cursor-pointer hover:shadow-xl transition duration-300"
+                  className="bg-white rounded-lg shadow-lg p-4 hover:shadow-xl transition duration-300 flex items-center"
                 >
                   <img
                     src={community.image}
                     alt={community.name}
-                    className="w-full h-48 object-cover rounded-md mb-4"
+                    className="w-52 h-auto object-cover rounded-md mr-5"
                   />
-                  <h3 className="text-xl font-semibold text-blue-600 mb-2">
-                    {community.name}
-                  </h3>
-                  <p className="text-gray-700 mb-4">{community.description}</p>
-                  <div className="flex items-center justify-between text-sm text-gray-600 mb-4">
-                    <p className="font-medium">Members: {community.members}</p>
+                  <div className="w-full">
+                    <h3 className="text-xl font-semibold">{community.name}</h3>
+                    <p className="text-gray-700">{community.description}</p>
+                    <p className="font-medium text-sm">
+                      Members: {community.members}
+                    </p>
                     <div className="flex flex-wrap gap-2">
                       {community.tags.map((tag, index) => (
                         <span
                           key={index}
-                          className="px-3 py-1 bg-blue-100 text-blue-700 text-xs rounded-full"
+                          className="px-2 py-1 bg-[#f4ebb1] text-blue-700 text-sm rounded-full"
                         >
                           {tag}
                         </span>
                       ))}
                     </div>
                   </div>
-                  <div className="flex justify-center gap-3 mt-4">
-                    <Link to={`/community/${community.id}`}>
-                      <button className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition duration-200">
-                        View
-                      </button>
-                    </Link>
 
-                    <button
-                      onClick={() => alert(`Deleting ${community.name}`)}
-                      className="bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700 transition duration-200"
-                    >
-                      Delete
+                  <Link to={`/community/${community.id}`}>
+                    <button className="bg-[#40798C] w-52 text-white px-4 py-2 rounded-md hover:bg-[#2c5360] transition duration-200">
+                      View
                     </button>
-                  </div>
+                  </Link>
                 </div>
               ))
             ) : (
