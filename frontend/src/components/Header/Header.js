@@ -47,6 +47,7 @@ const Header = () => {
 
     // Decode the JWT to extract userId (you can use a library like jwt-decode)
     const decodedToken = jwtDecode(token);
+
     const userId = decodedToken?.id; // Assuming your token has an `id` field for userId
 
     if (!userId) {
@@ -55,14 +56,14 @@ const Header = () => {
     }
 
     // Call the backend logout API
-    await fetch("http://localhost:5000/users/logout", {
+    const response = await fetch("http://localhost:5000/users/logout", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({ userId }), // Send userId in request body
     });
-
+    console.log("ini response log out:", response);
     // Remove token from localStorage and update state
     localStorage.removeItem("token");
     setIsAuthenticated(false);
@@ -131,7 +132,7 @@ const Header = () => {
                       onClick={() => setIsOpen((prev) => !prev)} // Correctly toggles the isOpen state
                       className="focus:outline-none"
                     >
-                      <CgProfile className="text-white size-10" />
+                      <CgProfile className="text-white size-9 mt-1" />
                     </button>
 
                     {isOpen && (
@@ -268,7 +269,7 @@ const Header = () => {
                 </li>
                 <li>
                   <NavLink
-                    to="/marketplace"
+                    to="/collection"
                     className={({ isActive }) =>
                       `block py-2 pr-4 pl-3 rounded lg:bg-transparent lg:p-0 ${
                         isActive

@@ -92,7 +92,7 @@ const InboxPage = () => {
                 {item.claimable && (
                   <button
                     onClick={() => handleClaim(item.id)}
-                    className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition"
+                    className="bg-[#40798C] hover:bg-[#2c5360] text-white px-4 py-2 rounded-lg  transition"
                   >
                     Claim
                   </button>

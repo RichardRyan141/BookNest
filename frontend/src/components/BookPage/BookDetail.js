@@ -2,9 +2,8 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Swal from "sweetalert2";
 
-// Dummy data for books
-const books = [
-  {
+const books = {
+  1: {
     id: 1,
     title: "Atomic Habits",
     author: "F. Scott Fitzgerald",
@@ -15,169 +14,45 @@ const books = [
     chapters: 9,
     imageUrl: "/book-cover/atomic.jpg",
   },
-  {
-    id: 2,
-    title: "The Sorcerer's Stone",
-    author: "Harper Lee",
-    synopsis:
-      "A gripping, heart-wrenching, and wholly remarkable tale of coming-of-age in a South poisoned by virulent prejudice.",
-    genres: ["#Historical", "#Drama"],
-    rating: 5,
-    chapters: 31,
-    imageUrl: "/book-cover/harrypotter.jpg",
-  },
-  {
-    id: 3,
-    title: "Ego is The Enemy",
-    author: "Ryan Renold",
-    synopsis:
-      "A dystopian novel set in a totalitarian society ruled by Big Brother, exploring themes of oppression, surveillance, and freedom.",
-    genres: ["#Dystopian", "#SciFi"],
-    rating: 4,
-    chapters: 24,
-    imageUrl: "/book-cover/egoistheemey.jpg",
-  },
-  {
-    id: 4,
-    title: "Subtle Art",
-    author: "Jane Austen",
-    synopsis:
-      "A romantic novel that critiques the British landed gentry at the end of the 18th century, following the story of Elizabeth Bennet.",
-    genres: ["#Romance", "#Classic"],
-    rating: 5,
-    chapters: 61,
-    imageUrl: "/book-cover/subtleart.jpg",
-  },
-  {
-    id: 5,
-    title: "The Catcher in the Rye",
-    author: "J.D. Salinger",
-    synopsis:
-      "The story of teenage Holden Caulfield's experiences in New York City, exploring themes of identity, belonging, and alienation.",
-    genres: ["#Fiction", "#ComingOfAge"],
-    rating: 4,
-    chapters: 26,
-    imageUrl: "https://picsum.photos/150/220?random=5",
-  },
-  {
-    id: 6,
-    title: "Moby Dick",
-    author: "Herman Melville",
-    synopsis:
-      "A seafaring tale of Captain Ahab's obsessive quest to kill the great white whale, Moby Dick.",
-    genres: ["#Adventure", "#Classic"],
-    rating: 3,
-    chapters: 135,
-    imageUrl: "https://picsum.photos/150/220?random=6",
-  },
-  {
-    id: 7,
-    title: "War and Peace",
-    author: "Leo Tolstoy",
-    synopsis:
-      "An epic novel that intertwines the lives of five families with the historical events of the Napoleonic Wars.",
-    genres: ["#Historical", "#Classic"],
-    rating: 5,
-    chapters: 365,
-    imageUrl: "https://picsum.photos/150/220?random=7",
-  },
-  {
-    id: 8,
-    title: "Brave New World",
-    author: "Aldous Huxley",
-    synopsis:
-      "A dystopian novel set in a technologically advanced future society that explores issues of control, freedom, and happiness.",
-    genres: ["#Dystopian", "#SciFi"],
-    rating: 4,
-    chapters: 18,
-    imageUrl: "https://picsum.photos/150/220?random=8",
-  },
-  {
-    id: 9,
-    title: "The Lord of the Rings",
-    author: "J.R.R. Tolkien",
-    synopsis:
-      "An epic fantasy story of the quest to destroy the One Ring and defeat the Dark Lord Sauron.",
-    genres: ["#Fantasy", "#Adventure"],
-    rating: 5,
-    chapters: 62,
-    imageUrl: "https://picsum.photos/150/220?random=9",
-  },
-  {
-    id: 10,
-    title: "The Hobbit",
-    author: "J.R.R. Tolkien",
-    synopsis:
-      "A journey of Bilbo Baggins, a hobbit, who is swept into an epic quest to reclaim the lost Kingdom of Erebor.",
-    genres: ["#Fantasy", "#Adventure"],
-    rating: 4,
-    chapters: 19,
-    imageUrl: "https://picsum.photos/150/220?random=10",
-  },
-  {
-    id: 11,
-    title: "The Picture of Dorian Gray",
-    author: "Oscar Wilde",
-    synopsis:
-      "A story of vanity and moral corruption centered on Dorian Gray, a man who remains young while his portrait ages.",
-    genres: ["#Classic", "#Gothic"],
-    rating: 4,
-    chapters: 20,
-    imageUrl: "https://picsum.photos/150/220?random=11",
-  },
-  {
-    id: 12,
-    title: "Frankenstein",
-    author: "Mary Shelley",
-    synopsis:
-      "A gothic novel about Victor Frankenstein's creation of a creature and the tragic events that follow.",
-    genres: ["#Gothic", "#Horror"],
-    rating: 4,
-    chapters: 24,
-    imageUrl: "https://picsum.photos/150/220?random=12",
-  },
-  {
-    id: 13,
-    title: "Dracula",
-    author: "Bram Stoker",
-    synopsis:
-      "A horror novel telling the story of Count Dracula's attempt to move from Transylvania to England.",
-    genres: ["#Horror", "#Gothic"],
-    rating: 5,
-    chapters: 27,
-    imageUrl: "https://picsum.photos/150/220?random=13",
-  },
-  {
-    id: 14,
-    title: "The Alchemist",
-    author: "Paulo Coelho",
-    synopsis:
-      "The story of Santiago, a shepherd who travels to Egypt to discover a treasure and fulfills his personal legend.",
-    genres: ["#Adventure", "#Philosophical"],
-    rating: 4,
-    chapters: 35,
-    imageUrl: "https://picsum.photos/150/220?random=14",
-  },
-  {
-    id: 15,
-    title: "Jane Eyre",
-    author: "Charlotte Brontë",
-    synopsis:
-      "A novel following the experiences of Jane Eyre, including her growth to adulthood and her love for Mr. Rochester.",
-    genres: ["#Classic", "#Romance"],
-    rating: 5,
-    chapters: 38,
-    imageUrl: "https://picsum.photos/150/220?random=15",
-  },
-];
+};
 
 const BookDetail = () => {
-  const { id } = useParams(); // Get community ID from the URL params
-  const book = books.find((c) => c.id === parseInt(1));
+  const { id } = useParams();
+  const [book, setBook] = useState(null);
 
   useEffect(() => {
-    window.scrollTo(0, 0); // Scroll to top
-  }, []);
+    window.scrollTo(0, 0);
+
+    const fetchBooks = async () => {
+      try {
+        console.log(id);
+        const response = await fetch(`http://localhost:5000/books/${id}`);
+        if (response.ok) {
+          const data = await response.json();
+          const formattedBook = {
+            id: parseInt(id),
+            title: data.title || "Untitled",
+            author: data.author || "Unknown Author",
+            synopsis: data.synopsis || "No synopsis available.",
+            genres: data.tags || ["#General"],
+            rating: data.rating || 0,
+            chapters: data.chapters?.length || 0,
+            imageUrl: data.imageUrl || "/book-cover/egoistheemey.jpg",
+          };
+          setBook(formattedBook);
+        } else {
+          const fallbackBook = books[id] || books[1];
+          setBook(fallbackBook);
+        }
+      } catch (error) {
+        console.error("Error fetching books:", error);
+        const fallbackBook = books[id] || books[1];
+        setBook(fallbackBook);
+      }
+    };
+
+    fetchBooks();
+  }, [id]);
 
   const addBookCollection = () => {
     Swal.fire({
@@ -190,6 +65,14 @@ const BookDetail = () => {
   };
 
   if (!book) return <p>Book not found!</p>;
+
+  const truncateSynopsis = (synopsis, maxWords = 20) => {
+    const words = synopsis.split(" ");
+    if (words.length > maxWords) {
+      return words.slice(0, maxWords).join(" ") + "...";
+    }
+    return synopsis;
+  };
   return (
     <div className="container mx-auto p-6 max-w-4xl bg-white shadow-lg rounded-lg">
       <div className="flex">
@@ -222,7 +105,8 @@ const BookDetail = () => {
 
             {/* Synopsis */}
             <p className="text-gray-700 mb-4">
-              <span className="font-semibold">Synopsis:</span> {book.synopsis}
+              <span className="font-semibold">Synopsis:</span>{" "}
+              {truncateSynopsis(book.synopsis, 25)}
             </p>
           </div>
 

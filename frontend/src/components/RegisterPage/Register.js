@@ -1,7 +1,11 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 
 const Register = () => {
+  const navigate = useNavigate();
+
   const [formData, setFormData] = useState({
     username: "",
     email: "",
@@ -30,8 +34,14 @@ const Register = () => {
 
     if (data.token) {
       console.log("Registration successful:", data);
-      // Save the token to localStorage or context
-      // You might redirect the user to the dashboard or login page here
+      navigate("/login");
+      await Swal.fire({
+        icon: "success",
+        title: "Register Successful",
+        text: "Please Login!",
+        timer: 2000,
+        showConfirmButton: false,
+      });
     } else {
       console.log("Registration failed:", data.message);
     }
@@ -62,7 +72,7 @@ const Register = () => {
                     value={formData.username}
                     onChange={handleChange}
                     className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    placeholder="name@company.com"
+                    placeholder="your username"
                     required=""
                   />
                 </div>
@@ -102,8 +112,8 @@ const Register = () => {
                   </label>
                   <input
                     type="password"
-                    name="password"
-                    id="password"
+                    name="confirmPassword"
+                    id="confirmPassword"
                     placeholder="••••••••"
                     value={formData.confirmPassword}
                     onChange={handleChange}

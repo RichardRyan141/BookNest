@@ -19,6 +19,7 @@ import BookList from "./components/BookPage/BookList";
 import BookDetail from "./components/BookPage/BookDetail";
 import CreateBook from "./components/BookPage/CreateBook";
 import Membership from "./components/Membership/Membership";
+import Collection from "./components/Collection/Collection";
 
 const router = createBrowserRouter([
   {
@@ -75,6 +76,14 @@ const router = createBrowserRouter([
     element: (
       <Layout>
         <MarketPage />
+      </Layout>
+    ),
+  },
+  {
+    path: "/collection",
+    element: (
+      <Layout>
+        <Collection />
       </Layout>
     ),
   },

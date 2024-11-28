@@ -20,31 +20,37 @@ const LoginPage = () => {
   };
 
   const handleSubmit = async (e) => {
-    // e.preventDefault();
-    // const response = await fetch("http://localhost:5000/users/login", {
-    //   method: "POST",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //   },
-    //   body: JSON.stringify(formData),
-    // });
-    // const data = await response.json();
-    // if (data.token) {
-    //   console.log("Login successful:", data);
-    //   localStorage.setItem("token", data.token); // Save the token to localStorage
-    // } else {
-    //   console.log("Login failed:", data.message);
-    // }
-
-    setIsAuthenticated(true);
-    navigate("/");
-    await Swal.fire({
-      icon: "success",
-      title: "Login Successful",
-      text: "Welcome back!",
-      timer: 2000,
-      showConfirmButton: false,
+    e.preventDefault();
+    const response = await fetch("http://localhost:5000/users/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formData),
     });
+    const data = await response.json();
+    if (data.token) {
+      console.log("Login successful:", data);
+      localStorage.setItem("token", data.token); // Save the token to localStorage
+      setIsAuthenticated(true);
+      navigate("/");
+      await Swal.fire({
+        icon: "success",
+        title: "Login Successful",
+        text: "Welcome back!",
+        timer: 2000,
+        showConfirmButton: false,
+      });
+    } else {
+      console.log("Login failed:", data.message);
+      await Swal.fire({
+        icon: "error",
+        title: "Login failed",
+        text: data.message,
+        timer: 2000,
+        showConfirmButton: false,
+      });
+    }
   };
 
   return (

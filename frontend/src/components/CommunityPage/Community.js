@@ -179,7 +179,7 @@ const Community = () => {
 
                 <button
                   onClick={() => joinCommunity(community)}
-                  className="w-72 bg-[#40798C] text-white py-2 px-4 rounded-lg hover:bg-[#2c5360] h-fit"
+                  className="w-72 bg-[#40798C] hover:bg-[#2c5360] text-white py-2 px-4 rounded-lg  h-fit"
                 >
                   Join
                 </button>

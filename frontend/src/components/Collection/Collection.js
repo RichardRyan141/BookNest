@@ -44,7 +44,7 @@ const dummyBooks = Array.from({ length: 80 }, (_, index) => {
   };
 });
 
-const Bookshelf = () => {
+const Collection = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [sortOption, setSortOption] = useState("Popular");
   const [filteredBooks, setFilteredBooks] = useState(dummyBooks);
@@ -128,17 +128,6 @@ const Bookshelf = () => {
     setCurrentPage(1); // Reset to first page when sort changes
   };
 
-  const handleGenreChange = (selectedGenre) => {
-    setCurrentPage(1); // Reset to first page when genre changes
-    if (selectedGenre) {
-      setFilteredBooks(
-        dummyBooks.filter((book) => book.genres.includes(selectedGenre))
-      );
-    } else {
-      setFilteredBooks(dummyBooks); // Show all books if no genre is selected
-    }
-  };
-
   const handleBookmarkClick = () => {
     Swal.fire({
       icon: "success",
@@ -156,7 +145,7 @@ const Bookshelf = () => {
 
   return (
     <div className="p-6 max-w-4xl mx-auto">
-      <div className="w-full flex justify-center">
+      <div className="w-full flex justify-center mb-4">
         <div className="flex items-center border justify-center w-2/3 bg-white rounded-lg shadow-md p-2">
           <input
             type="text"
@@ -167,22 +156,6 @@ const Bookshelf = () => {
           />
           <CiSearch className="text-gray-500 size-7 font-semibold cursor-pointer" />
         </div>
-      </div>
-
-      <div className="mt-4 flex flex-col justify-start mb-4">
-        <label className="mr-2 text-lg">Genre</label>
-        <select
-          id="genre-select"
-          className="p-2 border rounded w-fit"
-          onChange={(e) => handleGenreChange(e.target.value)}
-        >
-          <option value="">All Genres</option>
-          {genresList.map((genre) => (
-            <option key={genre} value={genre}>
-              {genre}
-            </option>
-          ))}
-        </select>
       </div>
 
       <label className="text-lg">Urutkan</label>
@@ -196,7 +169,7 @@ const Bookshelf = () => {
             }`}
             onClick={() => handleSortChange("Popular")}
           >
-            Popular
+            Dibaca
           </button>
           <button
             className={`mr-4 py-2 px-4 rounded ${
@@ -206,17 +179,7 @@ const Bookshelf = () => {
             }`}
             onClick={() => handleSortChange("Rating")}
           >
-            Rating
-          </button>
-          <button
-            className={`py-2 px-4 rounded ${
-              sortOption === "Update"
-                ? "bg-[#40798C] text-white"
-                : "bg-gray-300"
-            }`}
-            onClick={() => handleSortChange("Update")}
-          >
-            Update
+            Ditambahkan
           </button>
         </div>
         <div className="flex justify-between items-center">
@@ -298,4 +261,4 @@ const Bookshelf = () => {
   );
 };
 
-export default Bookshelf;
+export default Collection;
