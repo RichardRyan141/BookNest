@@ -32,6 +32,7 @@ const Profile = () => {
   useEffect(() => {
     const fetchUsers = async () => {
       const token = localStorage.getItem("token");
+      console.log("ini token:", token);
       const id = getIdFromToken(token);
       console.log("ini token:", id);
       try {

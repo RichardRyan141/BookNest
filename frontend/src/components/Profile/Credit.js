@@ -39,13 +39,14 @@ const Credit = ({ credit }) => {
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
           },
-          body: JSON.stringify({ amount }),
+          body: JSON.stringify({ amount: parseInt(amount) }),
         }
       );
+
       if (!response.ok) {
         throw new Error("Failed to buy credits");
       }
-
+      setSaldo(parseInt(saldo) + parseInt(amount));
       await Swal.fire({
         icon: "success",
         title: "Top Up Successful",
