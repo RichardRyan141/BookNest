@@ -20,7 +20,7 @@ const genresList = [
   "Horror",
 ];
 
-const dummyBooks = Array.from({ length: 80 }, (_, index) => {
+const dummyBooks = Array.from({ length: 8 }, (_, index) => {
   // Randomly select between 1 and 3 genres for each book
   const numGenres = Math.ceil(Math.random() * 3);
   const selectedGenres = [];

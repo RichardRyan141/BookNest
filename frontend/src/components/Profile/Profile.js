@@ -1,9 +1,19 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Reward from "./Reward";
 import Credit from "./Credit";
 
 const Profile = () => {
   const [selectedPage, setSelectedPage] = useState("profile");
+
+  const getIdFromToken = (jwt) => {
+    const base64Url = jwt.split(".")[1]; // Get payload
+    const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
+    const jsonPayload = JSON.parse(atob(base64)); // Decode and parse JSON
+    return jsonPayload.id; // Return the 'id' field
+  };
+
+  const [user, setUser] = useState();
+  const [loading, setLoading] = useState(true);
 
   // Dummy data
   const userData = {
@@ -19,7 +29,31 @@ const Profile = () => {
     badges: ["Book Worm", "Literary Critic", "Community Leader"],
   };
 
-  // Dummy data for Rewards
+  useEffect(() => {
+    const fetchUsers = async () => {
+      const token = localStorage.getItem("token");
+      const id = getIdFromToken(token);
+      console.log("ini token:", id);
+      try {
+        setLoading(true);
+        const response = await fetch("http://localhost:5000/users");
+        if (!response.ok) {
+          throw new Error("Failed to fetch users");
+        }
+        const data = await response.json();
+        const user = data.find((e) => e.id === id);
+        console.log("ini user", user);
+        setUser(user);
+      } catch (err) {
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchUsers();
+  }, []);
+
+  if (loading) return <p>Loading...</p>;
 
   return (
     <>
@@ -71,9 +105,9 @@ const Profile = () => {
               />
               <div>
                 <h1 className="text-2xl font-semibold text-gray-800">
-                  {userData.username}
+                  {user.name}
                 </h1>
-                <p className="text-gray-600">{userData.email}</p>
+                <p className="text-gray-600 mt-0">{user.email}</p>
               </div>
             </div>
 
@@ -202,7 +236,7 @@ const Profile = () => {
         </>
       )}
       {selectedPage === "rewards" && <Reward />}
-      {selectedPage === "credit" && <Credit />}
+      {selectedPage === "credit" && <Credit credit={user.credits} />}
     </>
   );
 };
