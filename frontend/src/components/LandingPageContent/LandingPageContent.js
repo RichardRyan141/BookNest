@@ -1,11 +1,59 @@
 import React, { useState } from "react";
 import "./LandingPageContent.css";
+import { CiStar } from "react-icons/ci";
+import Swal from "sweetalert2";
+import { Link } from "react-router-dom";
+import { MdOutlineBookmarkAdd } from "react-icons/md";
+
+const genresList = [
+  "Fantasy",
+  "Romance",
+  "Action",
+  "Sci-Fi",
+  "Thriller",
+  "Drama",
+  "Mystery",
+  "Horror",
+];
+
+const dummyBooks = Array.from({ length: 5 }, (_, index) => {
+  // Randomly select between 1 and 3 genres for each book
+  const numGenres = Math.ceil(Math.random() * 3);
+  const selectedGenres = [];
+
+  for (let i = 0; i < numGenres; i++) {
+    const randomGenre =
+      genresList[Math.floor(Math.random() * genresList.length)];
+    if (!selectedGenres.includes(randomGenre)) {
+      selectedGenres.push(randomGenre);
+    }
+  }
+
+  return {
+    id: index + 2,
+    title: `Book Title ${index + 1}`,
+    author: `Author ${index + 1}`,
+    rating: (Math.random() * 5).toFixed(1), // Random rating between 0 and 5
+    releaseUpdate: `2024-11-${Math.ceil(Math.random() * 27)}`, // Random release date
+    genres: selectedGenres, // Add the random genres
+    imageUrl: "/book-cover/atomic.jpg",
+  };
+});
 
 const LandingPageContent = () => {
   const [activeTab, setActiveTab] = useState("week");
-
+  const [filteredBooks, setFilteredBooks] = useState(dummyBooks);
   const handleTabClick = (tab) => {
     setActiveTab(tab);
+  };
+  const handleBookmarkClick = () => {
+    Swal.fire({
+      icon: "success",
+      title: "Success",
+      text: "Successfuly add book to list!",
+      timer: 1000,
+      showConfirmButton: false,
+    });
   };
 
   return (
@@ -14,80 +62,46 @@ const LandingPageContent = () => {
         <div className="tag-title">
           <h2 className="text-2xl font-bold">Recommended Books</h2>
         </div>
-        <ul className="flex ">
-          <li className="min-w-[200px] rounded overflow-hidden shadow-lg transform hover:scale-105 transition duration-200">
-            <a href="/" className="title block">
-              <img
-                src="https://img.wattpad.com/cover/119307608-160-k828775.jpg"
-                alt="The Heritage of Throne"
-                className="w-full h-40 object-cover rounded"
-              />
-            </a>
-            <p className="dsbn text-center mt-2 font-semibold">
-              <a href="/">The Heritage of Throne</a>
-            </p>
-          </li>
-          <li className="min-w-[200px] rounded overflow-hidden shadow-lg transform hover:scale-105 transition duration-200">
-            <a href="/" className="title block">
-              <img
-                src="https://img.wattpad.com/cover/148969091-160-k543913.jpg"
-                alt="FALLING for The BEAST"
-                className="w-full h-40 object-cover rounded"
-              />
-            </a>
-            <p className="dsbn text-center mt-2 font-semibold">
-              <a href="/">FALLING for The BEAST</a>
-            </p>
-          </li>
-          <li className="min-w-[200px] rounded overflow-hidden shadow-lg transform hover:scale-105 transition duration-200">
-            <a href="/" className="title block">
-              <img
-                src="https://img.wattpad.com/cover/243988896-160-k678476.jpg"
-                alt="Hiraeth Airlines"
-                className="w-full h-40 object-cover rounded"
-              />
-            </a>
-            <p className="dsbn text-center mt-2 font-semibold">
-              <a href="/">Hiraeth Airlines</a>
-            </p>
-          </li>
-          <li className="min-w-[200px] rounded overflow-hidden shadow-lg transform hover:scale-105 transition duration-200">
-            <a href="/" className="title block">
-              <img
-                src="https://img.wattpad.com/cover/278065328-160-k487308.jpg"
-                alt="The Proposal"
-                className="w-full h-40 object-cover rounded"
-              />
-            </a>
-            <p className="dsbn text-center mt-2 font-semibold">
-              <a href="/">The Proposal</a>
-            </p>
-          </li>
-          <li className="min-w-[200px] rounded overflow-hidden shadow-lg transform hover:scale-105 transition duration-200">
-            <a href="/" className="title block">
-              <img
-                src="https://img.wattpad.com/cover/273783694-160-k673859.jpg"
-                alt="Resign From You"
-                className="w-full h-40 object-cover rounded"
-              />
-            </a>
-            <p className="dsbn text-center mt-2 font-semibold">
-              <a href="/">Resign From You</a>
-            </p>
-          </li>
-          <li className="min-w-[200px] rounded overflow-hidden shadow-lg transform hover:scale-105 transition duration-200">
-            <a href="/" className="title block">
-              <img
-                src="https://img.wattpad.com/cover/351815313-160-k614173.jpg"
-                alt="Rebel Prince"
-                className="w-full h-40 object-cover rounded"
-              />
-            </a>
-            <p className="dsbn text-center mt-2 font-semibold">
-              <a href="/">Rebel Prince</a>
-            </p>
-          </li>
-        </ul>
+        <div className="grid grid-cols-5 gap-4">
+          {filteredBooks.map((book) => (
+            <Link to={`/book/${book.id}`}>
+              <div
+                key={book.id}
+                className="p-2 border rounded shadow-md hover:shadow-lg cursor-pointer bg-white"
+              >
+                <div
+                  className="h-52 bg-gray-200 flex items-center justify-center text-gray-500 bg-cover bg-center"
+                  style={{ backgroundImage: `url(${book.imageUrl})` }}
+                >
+                  <p>Cover {book.id}</p>
+                </div>
+                <p className="text-sm text-gray-600 m-0">{book.author}</p>
+                <p className="text-base font-semibold m-0 truncate">
+                  {book.title}
+                </p>
+                <p className="whitespace-nowrap truncate">
+                  Genres: {book.genres.join(", ")}
+                </p>
+
+                <div className="flex justify-between items-center">
+                  <div className="flex items-center">
+                    <CiStar className="text-black mr-1" />
+                    <span>{book.rating}</span>
+                  </div>
+
+                  <MdOutlineBookmarkAdd
+                    className="size-7 hover:bg-gray-300 p-1 rounded-full cursor-pointer"
+                    onClick={(event) => {
+                      event.preventDefault();
+                      event.stopPropagation(); // Prevent the click from propagating to the <Link>
+                      handleBookmarkClick(book.id); // Your specific function
+                    }}
+                  />
+                </div>
+              </div>
+            </Link>
+          ))}
+        </div>
       </div>
 
       <div className="popular-books h-fit space-y-6">

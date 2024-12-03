@@ -56,7 +56,13 @@ const BookChapter = () => {
             imageUrl: data.imageUrl || "/book-cover/egoistheemey.jpg",
           };
           setBook(formattedBook);
-          setChapter(formattedBook.chapters[cid - 1]);
+          const response2 = await fetch(
+            `http://localhost:5000/books/${bid}/${cid}`
+          );
+          if (response2.ok) {
+            const data2 = await response2.json();
+            setChapter(data2);
+          }
         } else {
           setBook(dummyBooks[bid]);
           setChapter(chapterDetails);
@@ -72,7 +78,6 @@ const BookChapter = () => {
 
   const toggleList = () => {
     setShowList((prev) => !prev);
-    // console.log("ini chapter:", chapter);
   };
 
   if (loading) {
@@ -132,7 +137,7 @@ const BookChapter = () => {
         <h3 className="text-xl font-bold text-gray-900 mb-4">
           {chapter.title}
         </h3>
-        <p className="text-gray-700">{chapterDetails.content}</p>
+        <p className="text-gray-700">{chapter.content}</p>
       </div>
     </div>
   );

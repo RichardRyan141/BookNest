@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Swal from "sweetalert2";
 import { Link } from "react-router-dom";
+import { FaLock } from "react-icons/fa";
 
 const books = {
   1: {
@@ -131,7 +132,7 @@ const BookDetail = () => {
 
             {/* View button */}
             <button
-              className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition duration-200"
+              className="px-4 py-2 bg-[#40798C] hover:bg-[#2c5360] text-white rounded-md  transition duration-200"
               onClick={addBookCollection}
             >
               Add to collection
@@ -149,11 +150,20 @@ const BookDetail = () => {
               className="p-4 border border-gray-300 rounded-lg shadow-sm bg-gray-50 flex items-center justify-between cursor-pointer hover:scale-105 duration-500"
             >
               <span>Chapter {index + 1}</span>
-              <Link to={`/book/${id}/chapter/${index + 1}`}>
-                <button className="text-blue-600 hover:text-blue-800 transition">
-                  View
-                </button>
-              </Link>
+
+              {index < 4 ? (
+                <>
+                  <Link to={`/book/${id}/chapter/${index + 1}`}>
+                    <button className="text-[#274387] transition">View</button>
+                  </Link>
+                </>
+              ) : (
+                <>
+                  <button className="text-[#274387] transition">
+                    <FaLock />
+                  </button>
+                </>
+              )}
             </li>
           ))}
         </ul>
