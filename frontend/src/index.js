@@ -20,6 +20,7 @@ import BookDetail from "./components/BookPage/BookDetail";
 import CreateBook from "./components/BookPage/CreateBook";
 import Membership from "./components/Membership/Membership";
 import Collection from "./components/Collection/Collection";
+import BookChapter from "./components/BookPage/BookChapter";
 
 const router = createBrowserRouter([
   {
@@ -108,6 +109,14 @@ const router = createBrowserRouter([
     element: (
       <Layout>
         <BookDetail />
+      </Layout>
+    ),
+  },
+  {
+    path: "/book/:bid/chapter/:cid",
+    element: (
+      <Layout>
+        <BookChapter />
       </Layout>
     ),
   },

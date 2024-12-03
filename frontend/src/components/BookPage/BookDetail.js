@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Swal from "sweetalert2";
+import { Link } from "react-router-dom";
 
 const books = {
   1: {
@@ -148,9 +149,11 @@ const BookDetail = () => {
               className="p-4 border border-gray-300 rounded-lg shadow-sm bg-gray-50 flex items-center justify-between cursor-pointer hover:scale-105 duration-500"
             >
               <span>Chapter {index + 1}</span>
-              <button className="text-blue-600 hover:text-blue-800 transition">
-                View
-              </button>
+              <Link to={`/book/${id}/chapter/${index + 1}`}>
+                <button className="text-blue-600 hover:text-blue-800 transition">
+                  View
+                </button>
+              </Link>
             </li>
           ))}
         </ul>
