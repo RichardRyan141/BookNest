@@ -152,7 +152,7 @@ const buyCredits = async (req, res) => {
   const authHeader = req.headers.authorization;
   console.log("ini amount:", amount);
 
-  if (!amount || amount <= 0) {
+  if (!amount) {
     return res
       .status(400)
       .json({ message: "Amount must be greater than zero" });

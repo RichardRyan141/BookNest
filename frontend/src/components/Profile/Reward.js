@@ -1,3 +1,10 @@
+import { FaLock } from "react-icons/fa";
+import { FaUnlock } from "react-icons/fa";
+import { FaFlagCheckered } from "react-icons/fa";
+import { FaMedal } from "react-icons/fa";
+import { GrTasks } from "react-icons/gr";
+import { BiSolidCommentEdit } from "react-icons/bi";
+
 const rewardData = {
   dailyReward: "50 Points",
   level: 5,
@@ -77,42 +84,84 @@ const Reward = () => {
           </p>
         </div>
 
-        {/* Draggable or Scrollable Missions Section */}
-        <h3 className="text-2xl font-semibold mb-4 text-blue-600">
-          🎯 Mission to Complete
-        </h3>
-        <div className="mt-4 overflow-y-auto max-h-72 bg-white border border-gray-200 rounded-lg shadow p-3">
-          <ul className="space-y-3">
-            {rewardData.missions.map((mission) => (
-              <li key={mission.id} className="flex items-center text-gray-700">
-                <span className="text-2xl mr-3">{mission.icon}</span>
-                <p>
-                  {mission.description} -{" "}
-                  <span
-                    className={`font-semibold ${
-                      mission.status === "Completed"
-                        ? "text-green-500"
-                        : mission.status === "In Progress"
-                        ? "text-yellow-500"
-                        : "text-red-500"
-                    }`}
-                  >
-                    {mission.status}
-                  </span>
-                </p>
+        <h3 className="text-lg ml-2 font-bold mb-4">Monthly Quest</h3>
+        <div className="mb-6 bg-white border border-gray-200 rounded-lg shadow p-3 text-center flex gap-9">
+          <div className="w-28 flex justify-center items-center">
+            <FaFlagCheckered className="size-16" />
+          </div>
+          <div className="w-full text-start">
+            <p className="font-semibold">Complete 30 quest</p>
+            <ol className="flex items-center w-full">
+              <li className="flex w-full items-center text-[#40798C] dark:text-blue-500 after:content-[''] after:w-full after:h-1 after:border-b after:border-[#488a9f6b] after:border-4 after:inline-block dark:after:border-blue-800">
+                <span className="flex items-center justify-center w-10 h-10 bg-[#488a9f6b] rounded-full lg:h-12 lg:w-12 dark:bg-blue-800 shrink-0">
+                  <FaUnlock />
+                </span>
               </li>
-            ))}
-          </ul>
+              <li className="flex w-full items-center after:content-[''] after:w-full after:h-1 after:border-b after:border-gray-100 after:border-4 after:inline-block dark:after:border-gray-700">
+                <span className="flex items-center justify-center w-10 h-10 bg-gray-100 rounded-full lg:h-12 lg:w-12 dark:bg-gray-700 shrink-0">
+                  <FaLock />
+                </span>
+              </li>
+              <li className="flex items-center w-full">
+                <span className="flex items-center justify-center w-10 h-10 bg-gray-100 rounded-full lg:h-12 lg:w-12 dark:bg-gray-700 shrink-0">
+                  <FaMedal />
+                </span>
+              </li>
+            </ol>
+          </div>
+        </div>
+
+        <h3 className="text-lg ml-2 font-bold mb-4 mt-16">Daily Quest</h3>
+        <div className="mb-6 bg-white border border-gray-200 rounded-lg shadow p-3 text-center flex gap-9">
+          <div className="w-28 flex justify-center items-center">
+            <GrTasks className="size-16" />
+          </div>
+          <div className="w-full text-start">
+            <p className="font-semibold">Read 1 Chapter</p>
+            <div className="w-full bg-gray-200 rounded-full h-3 mb-4 relative">
+              <div
+                className="bg-[#488a9f6b] h-3 rounded-full"
+                style={{ width: `0%` }}
+              ></div>
+              <div
+                className="absolute top-0 left-1/2 transform -translate-x-1/2 text-xs font-semibold text-gray-700"
+                style={{ marginTop: "-0.18rem" }} // Adjust for spacing above the bar
+              >
+                0/1
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="mb-6 bg-white border border-gray-200 rounded-lg shadow p-3 text-center flex gap-9">
+          <div className="w-28 flex justify-center items-center">
+            <BiSolidCommentEdit className="size-16" />
+          </div>
+          <div className="w-full text-start">
+            <p className="font-semibold">Leave a comment</p>
+            <div className="w-full bg-gray-200 rounded-full h-3 mb-4 relative">
+              <div
+                className="bg-[#488a9f6b] h-3 rounded-full"
+                style={{ width: `33%` }}
+              ></div>
+              <div
+                className="absolute top-0 left-1/2 transform -translate-x-1/2 text-xs font-semibold text-gray-700"
+                style={{ marginTop: "-0.18rem" }} // Adjust for spacing above the bar
+              >
+                1/3
+              </div>
+            </div>
+          </div>
         </div>
 
         {/* Level Progress */}
         <div className="mt-8 mb-6">
-          <h3 className="text-xl font-semibold mb-2 text-blue-600">
+          <h3 className="text-lg ml-2 font-bold mb-4">
             Level {rewardData.level}
           </h3>
-          <div className="w-full bg-gray-200 rounded-full h-4 mb-4">
+          <div className="w-full bg-gray-200 rounded-full h-3 mb-4">
             <div
-              className="bg-blue-600 h-4 rounded-full"
+              className="bg-[#488a9f6b] h-3 rounded-full"
               style={{ width: `${rewardData.levelProgress}%` }}
             ></div>
           </div>
@@ -123,9 +172,7 @@ const Reward = () => {
 
         {/* Badge Section */}
         <div className="mt-8">
-          <h3 className="text-2xl font-semibold mb-4 text-blue-600">
-            How to Earn Badges
-          </h3>
+          <h3 className="text-lg ml-2 font-bold mb-4 ">How to Earn Badges</h3>
           <div className="flex flex-col gap-4">
             {rewardData.badges.map((badge, index) => (
               <div
