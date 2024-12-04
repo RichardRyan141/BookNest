@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import Swal from "sweetalert2";
 import { Link } from "react-router-dom";
 import { FaLock } from "react-icons/fa";
+import Modal from "../Modal/Modal";
 
 const books = {
   1: {
@@ -21,6 +22,15 @@ const books = {
 const BookDetail = () => {
   const { id } = useParams();
   const [book, setBook] = useState(null);
+  const [showPurchase, setShowPurchase] = useState(false);
+
+  const openPurchase = () => {
+    setShowPurchase(true);
+  };
+
+  const closePurchase = () => {
+    setShowPurchase(false);
+  };
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -75,6 +85,19 @@ const BookDetail = () => {
     }
     return synopsis;
   };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    closePurchase();
+
+    Swal.fire({
+      title: "Success!",
+      text: "Purchase Successfull.",
+      icon: "success",
+      confirmButtonText: "OK",
+    });
+  };
+
   return (
     <div className="container mx-auto p-6 max-w-4xl bg-white shadow-lg rounded-lg">
       <div className="flex">
@@ -159,7 +182,10 @@ const BookDetail = () => {
                 </>
               ) : (
                 <>
-                  <button className="text-[#274387] transition">
+                  <button
+                    className="text-[#274387] transition"
+                    onClick={openPurchase}
+                  >
                     <FaLock />
                   </button>
                 </>
@@ -168,6 +194,52 @@ const BookDetail = () => {
           ))}
         </ul>
       </div>
+      <Modal isOpen={showPurchase} onClose={closePurchase}>
+        <div className="">
+          <h3 className="text-2xl font-bold text-gray-800 mb-6 text-center">
+            Choose Your Payment Method
+          </h3>
+          <form className="space-y-4" onSubmit={handleSubmit}>
+            {/* Balance Card */}
+            <label className="block bg-white p-4 rounded border shadow-sm hover:shadow-lg cursor-pointer">
+              <div className="flex items-center space-x-4">
+                <input
+                  type="radio"
+                  name="purchaseOption"
+                  value="balance"
+                  className="w-5 h-5 text-blue-600 focus:ring-blue-500"
+                  defaultChecked
+                />
+                <div>
+                  <h4 className="text-lg font-semibold">Balance</h4>
+                  <p className="text-sm text-gray-500">(e.g., $50)</p>
+                </div>
+              </div>
+            </label>
+            {/* Points Card */}
+            <label className="block bg-white p-4 rounded border shadow-sm hover:shadow-lg cursor-pointer">
+              <div className="flex items-center space-x-4">
+                <input
+                  type="radio"
+                  name="purchaseOption"
+                  value="points"
+                  className="w-5 h-5 text-blue-600 focus:ring-blue-500"
+                />
+                <div>
+                  <h4 className="text-lg font-semibold">Points</h4>
+                  <p className="text-sm text-gray-500">(e.g., 500 points)</p>
+                </div>
+              </div>
+            </label>
+            <button
+              type="submit"
+              className="w-full bg-green-600 text-white py-3 rounded hover:bg-green-700 transition font-semibold"
+            >
+              Confirm Purchase
+            </button>
+          </form>
+        </div>
+      </Modal>
     </div>
   );
 };
