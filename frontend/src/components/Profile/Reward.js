@@ -147,7 +147,7 @@ const Reward = () => {
         {/* Daily Reward */}
         <div className="mb-6 bg-white border border-gray-200 rounded-lg shadow p-3 text-center">
           <p className="text-xl font-semibold">
-            Daily Reward:{" "}
+            Your Points:{" "}
             <span className="font-bold">{rewardData.dailyReward}</span>
           </p>
         </div>

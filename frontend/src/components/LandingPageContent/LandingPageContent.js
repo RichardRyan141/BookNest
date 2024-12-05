@@ -16,6 +16,14 @@ const genresList = [
   "Horror",
 ];
 
+const imageURL = [
+  "/book-cover/atomic.jpg",
+  "/book-cover/egoistheemey.jpg",
+  "/book-cover/harrypotter.jpg",
+  "/book-cover/subtleart.jpg",
+  "/book-cover/king.jpg",
+];
+
 const dummyBooks = Array.from({ length: 5 }, (_, index) => {
   // Randomly select between 1 and 3 genres for each book
   const numGenres = Math.ceil(Math.random() * 3);
@@ -36,7 +44,7 @@ const dummyBooks = Array.from({ length: 5 }, (_, index) => {
     rating: (Math.random() * 5).toFixed(1), // Random rating between 0 and 5
     releaseUpdate: `2024-11-${Math.ceil(Math.random() * 27)}`, // Random release date
     genres: selectedGenres, // Add the random genres
-    imageUrl: "/book-cover/atomic.jpg",
+    imageUrl: imageURL[index],
   };
 });
 
@@ -70,7 +78,7 @@ const LandingPageContent = () => {
                 className="p-2 border rounded shadow-md hover:shadow-lg cursor-pointer bg-white"
               >
                 <div
-                  className="h-52 bg-gray-200 flex items-center justify-center text-gray-500 bg-cover bg-center"
+                  className="h-64 bg-gray-200 flex items-center justify-center text-gray-500 bg-cover bg-center"
                   style={{ backgroundImage: `url(${book.imageUrl})` }}
                 >
                   <p>Cover {book.id}</p>

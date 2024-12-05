@@ -14,7 +14,7 @@ const books = {
       "A story of the young and mysterious millionaire Jay Gatsby and his passion for the beautiful Daisy Buchanan, set in the Jazz Age on Long Island.",
     genres: ["#Classic", "#Romance"],
     rating: 4,
-    chapters: 9,
+    chapters: [1, 1, 1, 1, 0, 0, 0, 0, 0],
     imageUrl: "/book-cover/atomic.jpg",
   },
 };
@@ -22,10 +22,13 @@ const books = {
 const BookDetail = () => {
   const { id } = useParams();
   const [book, setBook] = useState(null);
+  const [chapter, setChapter] = useState(null);
   const [showPurchase, setShowPurchase] = useState(false);
 
-  const openPurchase = () => {
+  const openPurchase = (chapter) => {
+    console.log("ini chapter1:", chapter);
     setShowPurchase(true);
+    setChapter(chapter);
   };
 
   const closePurchase = () => {
@@ -48,7 +51,11 @@ const BookDetail = () => {
             synopsis: data.synopsis || "No synopsis available.",
             genres: data.tags || ["#General"],
             rating: data.rating || 0,
-            chapters: data.chapters?.length || 0,
+            chapters: Array.isArray(data.chapters)
+              ? Array.from({ length: data.chapters.length }, (_, index) =>
+                  index < 4 ? 1 : 0
+                )
+              : [],
             imageUrl: data.imageUrl || "/book-cover/egoistheemey.jpg",
           };
           setBook(formattedBook);
@@ -88,13 +95,27 @@ const BookDetail = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    console.log("ini chapter:", chapter);
+    buyChapter(chapter);
     closePurchase();
+    console.log("ini book:", book);
 
     Swal.fire({
       title: "Success!",
       text: "Purchase Successfull.",
       icon: "success",
       confirmButtonText: "OK",
+    });
+  };
+
+  const buyChapter = (index) => {
+    setBook((prevBook) => {
+      if (!prevBook || !Array.isArray(prevBook.chapters)) return prevBook;
+      const updatedChapters = [...prevBook.chapters];
+      if (index >= 0 && index < updatedChapters.length) {
+        updatedChapters[index] = 1;
+      }
+      return { ...prevBook, chapters: updatedChapters };
     });
   };
 
@@ -150,7 +171,7 @@ const BookDetail = () => {
             {/* Chapters */}
             <div className="flex items-center mr-6">
               <span className="mr-2 font-semibold">Chapters:</span>
-              <span>{book.chapters}</span>
+              <span>{book.chapters?.length}</span>
             </div>
 
             {/* View button */}
@@ -167,14 +188,14 @@ const BookDetail = () => {
       <div className="mt-10">
         <h2 className="text-2xl font-semibold text-gray-800 mb-4">Chapters</h2>
         <ul className="grid grid-cols-2 gap-4">
-          {Array.from({ length: book.chapters }).map((_, index) => (
+          {Array.from({ length: book.chapters.length }).map((_, index) => (
             <li
               key={index}
               className="p-4 border border-gray-300 rounded-lg shadow-sm bg-gray-50 flex items-center justify-between cursor-pointer hover:scale-105 duration-500"
             >
               <span>Chapter {index + 1}</span>
 
-              {index < 4 ? (
+              {book.chapters[index] === 1 ? (
                 <>
                   <Link to={`/book/${id}/chapter/${index + 1}`}>
                     <button className="text-[#274387] transition">View</button>
@@ -184,7 +205,9 @@ const BookDetail = () => {
                 <>
                   <button
                     className="text-[#274387] transition"
-                    onClick={openPurchase}
+                    onClick={() => {
+                      openPurchase(index);
+                    }}
                   >
                     <FaLock />
                   </button>
@@ -212,7 +235,7 @@ const BookDetail = () => {
                 />
                 <div>
                   <h4 className="text-lg font-semibold">Balance</h4>
-                  <p className="text-sm text-gray-500">(e.g., $50)</p>
+                  <p className="text-sm text-gray-500">(e.g., $150)</p>
                 </div>
               </div>
             </label>
@@ -227,7 +250,7 @@ const BookDetail = () => {
                 />
                 <div>
                   <h4 className="text-lg font-semibold">Points</h4>
-                  <p className="text-sm text-gray-500">(e.g., 500 points)</p>
+                  <p className="text-sm text-gray-500">(e.g., 50 points)</p>
                 </div>
               </div>
             </label>
